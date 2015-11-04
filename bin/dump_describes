@@ -1,0 +1,146 @@
+#!/usr/bin/env node
+/* eslint-disable no-console */
+'use strict';
+
+let esprima = require('esprima'),
+    fs = require('fs'),
+    results = new Map(),
+    indent = 0,
+    printer, visitor;
+
+printer = {
+    captureRow: (name) => {
+        printer.rows.push(
+            `<p style="padding-left: ${indent * 50}px;" class="${indent < 2 ? 'stripe' : ''}"><span>(describe)</span>${name}</p>\n\t\t`
+        );
+    },
+
+    makeTpl: (header, suite) => {
+        return `
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <meta charset="utf-8">
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                h3 {
+                    background: #e5a552;
+                    border: 0px solid #000;
+                    border-top-width: 2px;
+                    padding: 10px;
+                }
+
+                p {
+                    padding: 10px;
+                }
+
+                p.stripe {
+                    background: #ddd;
+                    border: 0px solid #000;
+                    border-top-width: 2px;
+                }
+
+                span {
+                    color: #207ab2;
+                    margin-right: 5px;
+                }
+            </style>
+            </head>
+
+            <body>
+                <h3>${header}</h3>
+                ${suite}
+            </body>
+            </html>
+        `;
+    },
+
+    print: (map) => {
+        indent++;
+
+        for (let entry of map.entries()) {
+            printer.captureRow(entry[0]);
+
+            if (entry[1].size) {
+                printer.print(entry[1]);
+            }
+        }
+
+        indent--;
+    },
+
+    rows: []
+};
+
+visitor = {
+    visit: (object, fn, results) => {
+        results = fn.call(null, object, results);
+
+        for (let n in object) {
+            if (object.hasOwnProperty(n)) {
+                let obj = object[n];
+
+                if (typeof obj === 'object' && obj !== null) {
+                    visitor.visit(obj, fn, results);
+                }
+            }
+        }
+
+        return results;
+    },
+
+    collect: (node, results) => {
+        let type = node.type;
+
+        if (type === 'ExpressionStatement') {
+            let expression = node.expression,
+                callee = expression.callee,
+                args = expression.arguments;
+
+            if (expression.type === 'CallExpression' && callee.type === 'Identifier' && callee.name === 'describe') {
+                if (args[0].type === 'Literal') {
+                    results.set(args[0].value, new Map());
+                    results = visitor.visit(args[1].body, visitor.collect, results.get(args[0].value));
+                } else {
+                    // TODO: It's a WrappingNode.
+                    // get results...
+                }
+            }
+        }
+
+        return results;
+    }
+};
+
+fs.readFile(process.argv[2], 'utf8', (err, fileContents) => {
+    if (err) {
+        throw err;
+    }
+
+    console.log('Just a moment while I create your sweet suite...');
+
+    results = visitor.visit(esprima.parse(fileContents), visitor.collect, results);
+
+    for (let m of results.entries()) {
+        let suiteName = m[0],
+            newFile = suiteName + '_suite.html',
+            curried = printer.makeTpl.bind(null, suiteName),
+            tpl;
+
+        printer.print(m[1]);
+        tpl = curried(printer.rows.join(''));
+
+        fs.writeFile(newFile, tpl, 'utf8', (err) => {
+            if (err) {
+                console.log('[ERROR] Oh no, something went wrong!');
+            } else {
+                console.log('Suite ' + newFile + ' created successfully!');
+            }
+        });
+    }
+});
+

@@ -1,0 +1,32 @@
+{
+  "name": "dump_describes",
+  "version": "0.1.0",
+  "description": "List all `describes` blocks in a Jasmine suite",
+  "bin": {
+    "dump_describes": "./bin/dump_describes"
+  },
+  "main": "./bin/dump_describes",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jasmine",
+    "esprima"
+  ],
+  "author": "Benjamin Toll <benjam72@yahoo.com> (http://www.benjamintoll.com)",
+  "license": "ISC",
+  "dependencies": {
+    "esprima": "^2.7.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btoll/dump_describes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/btoll/dump_describes/issues"
+  },
+  "homepage": "https://github.com/btoll/dump_describes#readme"
+}
