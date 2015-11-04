@@ -31,7 +31,7 @@ printer = {
                     background: #e5a552;
                     border: 0px solid #000;
                     border-top-width: 2px;
-                    padding: 10px;
+                    padding: 10px 10px 10px 20px;
                 }
 
                 p {
@@ -77,6 +77,66 @@ printer = {
 };
 
 visitor = {
+    collect: (node, results) => {
+        let type = node.type;
+
+        if (type === 'ExpressionStatement') {
+            let expression = node.expression,
+                callee = expression.callee,
+                args = expression.arguments;
+
+            if (expression.type === 'CallExpression' && callee.name === 'describe') {
+                let node = args[0],
+                    value;
+
+                //
+                // Node types we're interested in:
+                //     --> BinaryExpression
+                //     --> ConditionalExpression
+                //     --> Literal
+                //
+
+                value = visitor['get' + node.type](node);
+                results.set(value, new Map());
+
+                return visitor.visit(args[1].body, visitor.collect, results.get(value));
+            }
+        }
+
+        return results;
+    },
+
+    getBinaryExpression: (node) => {
+        let nodeLeft = node.left,
+            nodeRight = node.right,
+            value;
+
+        value = [
+            nodeLeft.type === 'Identifier' ?
+                nodeLeft.name : nodeLeft.raw,
+
+            node.operator,
+
+            nodeRight.type === 'Identifier' ?
+                nodeRight.name : nodeRight.raw
+        ].join(' ');
+
+        while (nodeLeft && nodeLeft.left) {
+            return visitor.getBinaryExpression(nodeLeft) + value;
+        }
+
+        return value;
+    },
+
+    getConditionalExpression: (node) => {
+        // TODO: Support nested ternaries.
+        return [node.test.name, ' ? ', node.consequent.value, ' : ', node.alternate.value].join(' ');
+    },
+
+    getLiteral: (node) => {
+        return node.value;
+    },
+
     visit: (object, fn, results) => {
         results = fn.call(null, object, results);
 
@@ -86,28 +146,6 @@ visitor = {
 
                 if (typeof obj === 'object' && obj !== null) {
                     visitor.visit(obj, fn, results);
-                }
-            }
-        }
-
-        return results;
-    },
-
-    collect: (node, results) => {
-        let type = node.type;
-
-        if (type === 'ExpressionStatement') {
-            let expression = node.expression,
-                callee = expression.callee,
-                args = expression.arguments;
-
-            if (expression.type === 'CallExpression' && callee.type === 'Identifier' && callee.name === 'describe') {
-                if (args[0].type === 'Literal') {
-                    results.set(args[0].value, new Map());
-                    results = visitor.visit(args[1].body, visitor.collect, results.get(args[0].value));
-                } else {
-                    // TODO: It's a WrappingNode.
-                    // get results...
                 }
             }
         }
