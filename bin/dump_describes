@@ -3,11 +3,9 @@
 'use strict';
 
 let esprima = require('esprima'),
-    fs = require('fs'),
     //printer = require('../printer/html'),
     printer = require('../printer/log'),
     results = new Map(),
-    indent = 0,
     visitor;
 
 visitor = {
@@ -40,7 +38,7 @@ visitor = {
         return results;
     },
 
-    getBinaryExpression: (node) => {
+    getBinaryExpression: function (node) {
         let nodeLeft = node.left,
             nodeRight = node.right,
             value;
@@ -56,7 +54,7 @@ visitor = {
         ].join(' ');
 
         while (nodeLeft && nodeLeft.left) {
-            return visitor.getBinaryExpression(nodeLeft) + value;
+            return this.getBinaryExpression(nodeLeft) + value;
         }
 
         return value;
@@ -71,7 +69,7 @@ visitor = {
         return node.value;
     },
 
-    visit: (object, fn, results) => {
+    visit: function (object, fn, results) {
         results = fn.call(null, object, results);
 
         for (let n in object) {
@@ -79,7 +77,7 @@ visitor = {
                 let obj = object[n];
 
                 if (typeof obj === 'object' && obj !== null) {
-                    visitor.visit(obj, fn, results);
+                    this.visit(obj, fn, results);
                 }
             }
         }
@@ -88,12 +86,17 @@ visitor = {
     }
 };
 
-fs.readFile(process.argv[2], 'utf8', (err, fileContents) => {
-    if (err) {
-        throw err;
-    }
+new Promise(function (resolve, reject) {
+    console.log('Just a moment while we crunch your suite...');
 
-    results = visitor.visit(esprima.parse(fileContents), visitor.collect, results);
+    return require('fs').readFile(process.argv[2], 'utf8', (err, fileContents) => {
+        if (err) {
+            reject('[ERROR] There was a problem processing the file');
+        } else {
+            resolve(visitor.visit(esprima.parse(fileContents), visitor.collect, results));
+        }
+    });
+}).then((results) => {
     printer.init(results);
-});
+}).catch(console.log);
 

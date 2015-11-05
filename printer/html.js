@@ -12,8 +12,6 @@
         },
 
         init: function (results) {
-            console.log('Just a moment while I create your sweet suite...');
-
             for (let m of results.entries()) {
                 let suiteName = m[0],
                     newFile = suiteName + '_suite.html',

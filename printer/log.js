@@ -18,7 +18,6 @@
 
         init: function (results) {
             for (let m of results.entries()) {
-                console.log(`Dumping results for suite ${m[0]}:\n`);
                 this.print(m[1]);
             }
         },
