@@ -4,77 +4,11 @@
 
 let esprima = require('esprima'),
     fs = require('fs'),
+    //printer = require('../printer/html'),
+    printer = require('../printer/log'),
     results = new Map(),
     indent = 0,
-    printer, visitor;
-
-printer = {
-    captureRow: (name) => {
-        printer.rows.push(
-            `<p style="padding-left: ${indent * 50}px;" class="${indent < 2 ? 'stripe' : ''}"><span>(describe)</span>${name}</p>\n\t\t`
-        );
-    },
-
-    makeTpl: (header, suite) => {
-        return `
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <meta charset="utf-8">
-            <style>
-                * {
-                    margin: 0;
-                    padding: 0;
-                }
-
-                h3 {
-                    background: #e5a552;
-                    border: 0px solid #000;
-                    border-top-width: 2px;
-                    padding: 10px 10px 10px 20px;
-                }
-
-                p {
-                    padding: 10px;
-                }
-
-                p.stripe {
-                    background: #ddd;
-                    border: 0px solid #000;
-                    border-top-width: 2px;
-                }
-
-                span {
-                    color: #207ab2;
-                    margin-right: 5px;
-                }
-            </style>
-            </head>
-
-            <body>
-                <h3>${header}</h3>
-                ${suite}
-            </body>
-            </html>
-        `;
-    },
-
-    print: (map) => {
-        indent++;
-
-        for (let entry of map.entries()) {
-            printer.captureRow(entry[0]);
-
-            if (entry[1].size) {
-                printer.print(entry[1]);
-            }
-        }
-
-        indent--;
-    },
-
-    rows: []
-};
+    visitor;
 
 visitor = {
     collect: (node, results) => {
@@ -159,26 +93,7 @@ fs.readFile(process.argv[2], 'utf8', (err, fileContents) => {
         throw err;
     }
 
-    console.log('Just a moment while I create your sweet suite...');
-
     results = visitor.visit(esprima.parse(fileContents), visitor.collect, results);
-
-    for (let m of results.entries()) {
-        let suiteName = m[0],
-            newFile = suiteName + '_suite.html',
-            curried = printer.makeTpl.bind(null, suiteName),
-            tpl;
-
-        printer.print(m[1]);
-        tpl = curried(printer.rows.join(''));
-
-        fs.writeFile(newFile, tpl, 'utf8', (err) => {
-            if (err) {
-                console.log('[ERROR] Oh no, something went wrong!');
-            } else {
-                console.log('Suite ' + newFile + ' created successfully!');
-            }
-        });
-    }
+    printer.init(results);
 });
 
