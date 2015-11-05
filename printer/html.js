@@ -1,13 +1,10 @@
 (() => {
     'use strict';
-    let fs = require('fs');
 
-    module.exports = {
-        indent: 0,
-
+    module.exports = Object.setPrototypeOf({
         captureRow: function (name) {
             this.rows.push(
-                `<p style="padding-left: ${this.indent * 50}px;" class="${this.indent < 2 ? 'stripe' : ''}"><span>(describe)</span>${name}</p>\n\t\t`
+                `<p style="padding-left: ${this.indent * 50}px;" class="${this.indent < 2 ? 'stripe' : ''}"><span>(describe)</span>${name}</p>\n`
             );
         },
 
@@ -22,7 +19,7 @@
                     this.print(m[1]);
                     tpl = curried(this.rows.join(''));
 
-                    fs.writeFile(newFile, tpl, 'utf8', (err) => {
+                    require('fs').writeFile(newFile, tpl, 'utf8', (err) => {
                         if (err) {
                             reject('[ERROR] Oh no, something went wrong!');
                         } else {
@@ -75,25 +72,7 @@
                 </body>
                 </html>
             `;
-        },
-
-        print: function (map) {
-            let me = this;
-
-            me.indent++;
-
-            for (let entry of map.entries()) {
-                me.captureRow(entry[0]);
-
-                if (entry[1].size) {
-                    me.print(entry[1]);
-                }
-            }
-
-            me.indent--;
-        },
-
-        rows: []
-    };
+        }
+    }, require('./printer'));
 })();
 

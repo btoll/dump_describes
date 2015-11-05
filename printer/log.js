@@ -13,34 +13,21 @@
         return tabs;
     };
 
-    module.exports = {
-        indent: 0,
-
+    module.exports = Object.setPrototypeOf({
         init: function (results) {
-            for (let m of results.entries()) {
-                this.print(m[1]);
-            }
+            // A Promise isn't strictly necessary here.
+            return new Promise((resolve) => {
+                for (let m of results.entries()) {
+                    this.print(m[1]);
+                }
+
+                resolve(this.rows.join('\n'));
+            });
         },
 
         captureRow: function (name) {
-            console.log(`${getTabs(this.indent)}(describe) ${name}`);
-        },
-
-        print: function (map) {
-            let me = this;
-
-            me.indent++;
-
-            for (let entry of map.entries()) {
-                me.captureRow(entry[0]);
-
-                if (entry[1].size) {
-                    me.print(entry[1]);
-                }
-            }
-
-            me.indent--;
+            this.rows.push(`${getTabs(this.indent)}(describe) ${name}`);
         }
-    };
+    }, require('./printer'));
 })();
 
