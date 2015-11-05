@@ -93,7 +93,7 @@ visitor = {
     }
 };
 
-new Promise(function (resolve, reject) {
+new Promise((resolve, reject) => {
     console.log('Just a moment while we crunch your suite...');
 
     return require('fs').readFile(file, 'utf8', (err, fileContents) => {
@@ -103,7 +103,10 @@ new Promise(function (resolve, reject) {
             resolve(visitor.visit(esprima.parse(fileContents), visitor.collect, results));
         }
     });
-}).then((results) => {
-    printer.init(results);
-}).catch(console.log);
+})
+.then((results) => {
+    return printer.init(results);
+})
+.then(console.log)
+.catch(console.log);
 

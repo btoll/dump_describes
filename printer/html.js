@@ -12,23 +12,25 @@
         },
 
         init: function (results) {
-            for (let m of results.entries()) {
-                let suiteName = m[0],
-                    newFile = suiteName + '_suite.html',
-                    curried = this.makeTpl.bind(null, suiteName),
-                    tpl;
+            return new Promise((resolve, reject) => {
+                for (let m of results.entries()) {
+                    let suiteName = m[0],
+                        newFile = suiteName + '_suite.html',
+                        curried = this.makeTpl.bind(null, suiteName),
+                        tpl;
 
-                this.print(m[1]);
-                tpl = curried(this.rows.join(''));
+                    this.print(m[1]);
+                    tpl = curried(this.rows.join(''));
 
-                fs.writeFile(newFile, tpl, 'utf8', (err) => {
-                    if (err) {
-                        console.log('[ERROR] Oh no, something went wrong!');
-                    } else {
-                        console.log('Suite ' + newFile + ' created successfully!');
-                    }
-                });
-            }
+                    fs.writeFile(newFile, tpl, 'utf8', (err) => {
+                        if (err) {
+                            reject('[ERROR] Oh no, something went wrong!');
+                        } else {
+                            resolve('Suite ' + newFile + ' created successfully!');
+                        }
+                    });
+                }
+            });
         },
 
         makeTpl: (header, suite) => {
