@@ -2,11 +2,18 @@
 /* eslint-disable no-console */
 'use strict';
 
-let esprima = require('esprima'),
-    //printer = require('../printer/html'),
-    printer = require('../printer/log'),
+let argv = require('yargs').argv,
+    esprima = require('esprima'),
+    // Default to logging to stdout.
+    printer = require(`../printer/${!argv.html ? 'log' : 'html'}`),
+    file = argv.file || argv.f,
     results = new Map(),
     visitor;
+
+if (!file) {
+    console.log('[ERROR] No file specified');
+    return;
+}
 
 visitor = {
     collect: (node, results) => {
@@ -89,7 +96,7 @@ visitor = {
 new Promise(function (resolve, reject) {
     console.log('Just a moment while we crunch your suite...');
 
-    return require('fs').readFile(process.argv[2], 'utf8', (err, fileContents) => {
+    return require('fs').readFile(file, 'utf8', (err, fileContents) => {
         if (err) {
             reject('[ERROR] There was a problem processing the file');
         } else {
