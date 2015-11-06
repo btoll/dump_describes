@@ -13,11 +13,13 @@ Dump the tree to `stdout`:
 
     dump_describes -f Filters.js
 
+![ScreenShot](/resources/screenshots/dump_describes_log.png?raw=true)
+
 Create an `html` document of the same tree:
 
     dump_describes -f Filters.js --html
 
-![ScreenShot](/resources/screenshots/dump_describes.png?raw=true)
+![ScreenShot](/resources/screenshots/dump_describes_html.png?raw=true)
 
 Redirect:
 
@@ -27,7 +29,7 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
-Weeeeeeeeeeeeeeeeeeeeeee!!!!!!!
+weeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!!!!!!!!!!!!!!!!
 
 [Esprima]: http://esprima.org/
 
