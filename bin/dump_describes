@@ -33,6 +33,7 @@ visitor = {
                 //     --> BinaryExpression
                 //     --> ConditionalExpression
                 //     --> Literal
+                //     --> UnaryExpression
                 //
 
                 value = visitor['get' + node.type](node);
@@ -45,27 +46,46 @@ visitor = {
         return results;
     },
 
-    getBinaryExpression: function (node) {
-        let nodeLeft = node.left,
-            nodeRight = node.right,
-            value;
+    getBinaryExpression: (() => {
+        let getNodeValue = (node) => {
+            let value;
 
-        value = [
-            nodeLeft.type === 'Identifier' ?
-                nodeLeft.name : nodeLeft.raw,
+            switch (node.type) {
+                case 'Identifier':
+                    value = node.name;
+                    break;
 
-            node.operator,
+                case 'Literal':
+                    value = node.raw;
+                    break;
 
-            nodeRight.type === 'Identifier' ?
-                nodeRight.name : nodeRight.raw
-        ].join(' ');
+                case 'UnaryExpression':
+                    value = visitor.getUnaryExpression(node);
+                    break;
+            }
 
-        while (nodeLeft && nodeLeft.left) {
-            return this.getBinaryExpression(nodeLeft) + value;
-        }
+            return value;
+        };
 
-        return value;
-    },
+        return (node) => {
+            let nodeLeft = node.left,
+                value = [];
+
+            value.push(
+                getNodeValue(nodeLeft),
+                ' ' + node.operator + ' ',
+                getNodeValue(node.right)
+            );
+
+            value = value.join(' ');
+
+            while (nodeLeft && nodeLeft.left) {
+                return visitor.getBinaryExpression(nodeLeft) + value;
+            }
+
+            return value;
+        };
+    })(),
 
     getConditionalExpression: (node) => {
         // TODO: Support nested ternaries.
@@ -75,6 +95,28 @@ visitor = {
     getLiteral: (node) => {
         return node.value;
     },
+
+    getUnaryExpression: (() => {
+        let needsPadding = new Set(['delete', 'instanceof', 'typeof']);
+
+        return (node) => {
+            let arg = node.argument,
+                // Pad the operator in cases where it's `delete`, `typeof`, etc.
+                operator = node.operator;
+
+            if (needsPadding.has(operator)) {
+                operator = ' ' + operator + ' ';
+            }
+
+            while (arg) {
+                return (node.prefix) ?
+                    operator + visitor.getUnaryExpression(arg) :
+                    visitor.getUnaryExpression(arg) + operator
+            }
+
+            return node.name;
+        };
+    })(),
 
     visit: function (object, fn, results) {
         results = fn.call(null, object, results);
