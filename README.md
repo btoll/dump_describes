@@ -17,6 +17,8 @@ Create an `html` document of the same tree:
 
     dump_describes -f Filters.js --html
 
+![ScreenShot](/resources/screenshots/dump_describes.png?raw=true)
+
 Redirect:
 
     dump_describes -f Filters.js --html > foo
