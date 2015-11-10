@@ -5,7 +5,7 @@
   "bin": {
     "dump_describes": "./bin/dump_describes"
   },
-  "main": "./bin/dump_describes",
+  "main": "./lib/makeTree.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

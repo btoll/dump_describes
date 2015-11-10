@@ -3,32 +3,15 @@
 'use strict';
 
 let argv = require('yargs').argv,
-    esprima = require('esprima'),
     // Default to logging to stdout.
     printer = require(`../lib/printer/${!argv.html ? 'log' : 'html'}`),
-    visitor = require('../lib/visitor'),
-    file = argv.file || argv.f,
-    results = new Map();
+    makeTree = require('../lib/makeTree'),
+    file = argv.file || argv.f;
 
 if (!file) {
     console.log('[ERROR] No file specified');
     return;
 }
 
-new Promise((resolve, reject) => {
-    console.log('Just a moment while we crunch your suite...');
-
-    return require('fs').readFile(file, 'utf8', (err, fileContents) => {
-        if (err) {
-            reject('[ERROR] There was a problem processing the file');
-        } else {
-            resolve(visitor.visit(esprima.parse(fileContents), visitor.collect, results));
-        }
-    });
-})
-.then((results) => {
-    return printer.init(results);
-})
-.then(console.log)
-.catch(console.log);
+makeTree(file, printer);
 
