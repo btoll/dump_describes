@@ -43,6 +43,15 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
+### Usage
+
+    Property | Description
+    ------------ | -------------
+    -f, --file | The suite to parse
+    --html | Creates an html document of the tree
+    -v, --verbose | Dumps `it` blocks
+    -h, --help | Show help
+
 Weeeeeeeeeeeeeeeeeeeeeeeeee!!!!!!!!!!!!!!
 
 [Esprima]: http://esprima.org/
