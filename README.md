@@ -15,25 +15,25 @@ Dump the tree to `stdout` (defaults to only the `describe` blocks):
 
     dump_describes -f Filters.js
 
-![ScreenShot](/resources/screenshots/log.png?raw=true)
+![ScreenShot](/screenshots/log.png?raw=true)
 
 Dump all `describe` and `it` blocks to `stdout`:
 
     dump_describes -f Filters.js --verbose
 
-![ScreenShot](/resources/screenshots/log_verbose.png?raw=true)
+![ScreenShot](/screenshots/log_verbose.png?raw=true)
 
 Create an `html` document of the same tree:
 
     dump_describes -f Filters.js --html
 
-![ScreenShot](/resources/screenshots/html.png?raw=true)
+![ScreenShot](/screenshots/html.png?raw=true)
 
 Create an `html` document of all `describe` and `it` blocks:
 
     dump_describes -f Filters.js --html --verbose
 
-![ScreenShot](/resources/screenshots/html_verbose.png?raw=true)
+![ScreenShot](/screenshots/html_verbose.png?raw=true)
 
 Redirect:
 
