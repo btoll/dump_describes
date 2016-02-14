@@ -43,6 +43,10 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
+Read from `stdin`:
+
+    coffee -p suite.coffee | dump_describes
+
 ### Usage
 
     Property | Description

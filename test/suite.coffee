@@ -57,7 +57,7 @@ define [
         @view.render()
         expect(window.$.fn.fedTooltip).toHaveBeenCalled()
 
-    fdescribe 'adding / removing networks', ->
+    describe 'adding / removing networks', ->
       beforeEach ->
         @view.render()
 
