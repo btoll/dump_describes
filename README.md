@@ -70,10 +70,10 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -f 
 
 ## Screenshots
 
-![ScreenShot](/screenshots/log.png?raw=true)
-![ScreenShot](/screenshots/log_verbose.png?raw=true)
-![ScreenShot](/screenshots/html.png?raw=true)
-![ScreenShot](/screenshots/html_verbose.png?raw=true)
+![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/log.png)
+![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/log_verbose.png)
+![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html.png)
+![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html_verbose.png)
 
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
