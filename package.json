@@ -5,13 +5,16 @@
   "bin": {
     "dump_describes": "./bin/dump_describes"
   },
-  "main": "./lib/makeTree.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "describes",
     "jasmine",
-    "esprima"
+    "esprima",
+    "test",
+    "suite"
   ],
   "author": "Benjamin Toll <benjam72@yahoo.com> (http://www.benjamintoll.com)",
   "license": "MIT",

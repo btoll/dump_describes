@@ -3,7 +3,7 @@
     'use strict';
 
     let esprima = require('esprima'),
-        visitor = require('./visitor');
+        visitor = require('./lib/visitor');
 
     function getSuite(file, isData) {
         return new Promise((resolve, reject) => {
