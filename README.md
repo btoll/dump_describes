@@ -56,7 +56,7 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
-## Integration with Vim
+## Using with Vim
 
 I use the following command abbreviations to view a suite from within Vim.
 
@@ -77,3 +77,12 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -f 
 
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
+
+## License
+
+[MIT](LICENSE)
+
+## Author
+
+Benjamin Toll
+
