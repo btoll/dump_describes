@@ -28,7 +28,7 @@
             return printer.init(contents, verbose);
         })
         .then(console.log)
-        .catch(console.log)
+        .catch(console.log);
     }
 
     function visitTree(suite, verbose) {
