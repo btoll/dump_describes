@@ -77,9 +77,6 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -f 
 ![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html.png)
 ![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html_verbose.png)
 
-[Esprima]: http://esprima.org/
-[Jasmine]: http://jasmine.github.io/
-
 ## License
 
 [MIT](LICENSE)
@@ -87,4 +84,7 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -f 
 ## Author
 
 Benjamin Toll
+
+[Esprima]: http://esprima.org/
+[Jasmine]: http://jasmine.github.io/
 
