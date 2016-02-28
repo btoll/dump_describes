@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/btoll/dump_describes.svg?branch=master)](https://travis-ci.org/btoll/dump_describes)
+
 # dump_describes
 
 **dump_describes** is a tool that provides a high-level view of all of the `describe` and `it` blocks in a [Jasmine] test suite.  This can be useful to quickly gain familiarity with a particular suite and to easily determine where to insert new tests.
