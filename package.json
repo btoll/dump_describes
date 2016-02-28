@@ -33,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/btoll/dump_describes/issues"
   },
-  "homepage": "https://github.com/btoll/dump_describes#readme"
+  "homepage": "https://github.com/btoll/dump_describes#readme",
+  "devDependencies": {
+    "eslint": "^2.2.0"
+  }
 }
