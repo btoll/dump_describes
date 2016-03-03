@@ -10,18 +10,22 @@
         }
 
         return tabs;
-    };
+    },
+    rows = [];
 
     module.exports = Object.setPrototypeOf({
         init: function (results, verbose) {
+            // Usually not needed to reset `rows` list except when running tests.
+            rows.length = 0;
+
             // A Promise isn't strictly necessary here.
             return new Promise((resolve) => {
                 for (let entry of results.entries()) {
-                    console.log(`Test suite ${entry[0]}`);
+                    rows.push(`Test suite ${entry[0]}`);
                     this.print(entry[1].map, verbose);
                 }
 
-                resolve(this.rows.join('\n'));
+                resolve(rows.join('\n'));
             });
         },
 
@@ -30,7 +34,7 @@
                 `(${type})` :
                 `${type} ->`;
 
-            this.rows.push(`${getTabs(this.indent)} ${t} ${name}`);
+            rows.push(`${getTabs(this.indent)} ${t} ${name}`);
         }
     }, require('./printer'));
 })();

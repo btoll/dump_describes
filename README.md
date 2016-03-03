@@ -1,8 +1,13 @@
 # dump_describes
 
 [![Build Status](https://travis-ci.org/btoll/dump_describes.svg?branch=master)](https://travis-ci.org/btoll/dump_describes)
+[![Coverage Status](https://coveralls.io/repos/github/btoll/dump_describes/badge.svg?branch=master)](https://coveralls.io/github/btoll/dump_describes?branch=master)
 
-**dump_describes** is a tool that provides a high-level view of all of the `describe` and `it` blocks in a [Jasmine] test suite.  This can be useful to quickly gain familiarity with a particular suite and to easily determine where to insert new tests.
+**dump_describes** is a tool that provides a high-level view of all of the `describe` and `it` blocks in a test suite.  This is useful to quickly gain familiarity with a particular suite and to easily determine where to insert new tests.
+
+Any testing framework that uses `describe` and `it` blocks to define a suite is supported, such as [Jasmine] and [Mocha].
+
+## How It Works
 
 **dump_describes** uses [Esprima] to parse the given JavaScript and create an AST. This is then recursively walked to find all of the `describe` blocks and, optionally, all of the `it` blocks. The results are either logged to `stdout` or written to an `html` document.
 
@@ -14,7 +19,7 @@ When transpiling from another language into JavaScript, it can be useful to pipe
 
 By default, **dump_describes** will only dump the `describe` blocks. Use the `--verbose` flag to also dump the `it` blocks.
 
-The following Jasmine identifiers are supported:
+The following identifiers are supported:
 
 + `describe`
 + `fdescribe`
@@ -87,4 +92,5 @@ Benjamin Toll
 
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
+[Mocha]: http://mochajs.org/
 

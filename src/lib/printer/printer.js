@@ -26,10 +26,6 @@
 
                 this.indent--;
             }
-        },
-
-        rows: {
-            value: []
         }
     });
 })();

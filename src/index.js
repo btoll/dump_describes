@@ -22,18 +22,31 @@
     }
 
     function makeTree(file, printer, verbose, isData) {
-        getSuite(file, isData)
+        if (!file) {
+            throw new Error('dump_describes: No file given');
+        }
+
+        if (!printer) {
+            throw new Error('dump_describes: No printer given');
+        }
+
+        console.log('Just a moment while we crunch your suite...');
+
+        return getSuite(file, isData)
         .then((suite) => {
             let contents = visitTree(suite, verbose);
-            return printer.init(contents, verbose);
-        })
-        .then(console.log)
-        .catch(console.log);
+
+            if (!contents.size) {
+                return `dump_describes: No results found for suite ${file}`;
+            } else {
+                return printer.init(contents, verbose);
+            }
+        });
     }
 
     function visitTree(suite, verbose) {
-        console.log('Just a moment while we crunch your suite...');
-        return visitor.visit(esprima.parse(suite), new Map(), verbose);
+        visitor.verbose = !!verbose;
+        return visitor.visit(esprima.parse(suite), new Map());
     }
 
     module.exports = makeTree;

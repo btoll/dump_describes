@@ -36,7 +36,7 @@
     reIt = /[f|x]?it/;
 
     module.exports = Object.setPrototypeOf({
-        checkCallExpression: function (node, results, verbose) {
+        checkCallExpression: function (node, results) {
             if (node.type === 'CallExpression') {
                 let args = node.arguments,
                     name = node.callee.name;
@@ -48,8 +48,8 @@
                     };
 
                     results.set(getNodeValue.call(this, args[0]), block);
-                    return this.visit(args[1].body, block.map, verbose);
-                } else if (verbose && reIt.test(name)) {
+                    return this.visit(args[1].body, block.map);
+                } else if (this.verbose && reIt.test(name)) {
                     results.set(getNodeValue.call(this, args[0]), name);
                 }
             }
@@ -57,11 +57,11 @@
             return results;
         },
 
-        collect: function (node, results, verbose) {
+        collect: function (node, results) {
             let type = node.type;
 
             if (type === 'ExpressionStatement') {
-                return this.checkCallExpression(node.expression, results, verbose);
+                return this.checkCallExpression(node.expression, results);
             } else if (type === 'ReturnStatement') {
                 // CoffeeScript transpiles into truly heinous JavaScript. For example,
                 // `describe` and `it` blocks were part of return statements, i.e.,
@@ -71,7 +71,7 @@
                 //      };
                 //
                 // Because of this, it was necessary to add this if clause.
-                return this.checkCallExpression(node.argument, results, verbose);
+                return this.checkCallExpression(node.argument, results);
             }
 
             return results;
@@ -143,15 +143,15 @@
             };
         })(),
 
-        visit: function (object, results, verbose) {
-            results = this.collect(object, results, verbose);
+        visit: function (object, results) {
+            results = this.collect(object, results);
 
             for (let n in object) {
                 if (object.hasOwnProperty(n)) {
                     let obj = object[n];
 
                     if (typeof obj === 'object' && obj !== null) {
-                        this.visit(obj, results, verbose);
+                        this.visit(obj, results);
                     }
                 }
             }
