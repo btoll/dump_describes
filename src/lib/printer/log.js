@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
+'use strict';
 
 (() => {
-    'use strict';
-
     let getTabs = (indent) => {
         let tabs = '';
 

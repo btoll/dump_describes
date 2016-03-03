@@ -3,10 +3,11 @@ node_js:
   - "stable"
   - "5"
   - "4"
-  - "0.12"
-  - "0.10"
-  - "iojs"
 before_install:
-  - npm i -g eslint
+  - npm i -g babel-cli
+  - npm i -g istanbul
+  - npm i -g jasmine
+after_success:
+  - npm run coveralls
 sudo: false
 

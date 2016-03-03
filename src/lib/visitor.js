@@ -1,6 +1,6 @@
-(() => {
-    'use strict';
+'use strict';
 
+(() => {
     let getNodeValue = function (node) {
         let value;
 

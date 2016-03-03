@@ -1,6 +1,6 @@
-(() => {
-    'use strict';
+'use strict';
 
+(() => {
     module.exports = Object.setPrototypeOf({
         makeChildNode: function (name, type) {
             return `<p class="${this.indent < 2 ? 'stripe' : ''}">

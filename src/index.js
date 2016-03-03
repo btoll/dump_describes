@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-(() => {
-    'use strict';
+'use strict';
 
+(() => {
     let esprima = require('esprima'),
         visitor = require('./lib/visitor');
 
