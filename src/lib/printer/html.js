@@ -1,6 +1,8 @@
 'use strict';
 
 (() => {
+    let printer = require('./printer');
+
     module.exports = Object.setPrototypeOf({
         makeChildNode: function (name, type) {
             return `<p class="${this.indent < 2 ? 'stripe' : ''}">
@@ -177,6 +179,6 @@
 
             return buf.join('');
         }
-    }, require('./printer'));
+    }, printer);
 })();
 

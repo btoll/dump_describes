@@ -11,7 +11,8 @@
 
         return tabs;
     },
-    rows = [];
+    rows = [],
+    printer = require('./printer');
 
     module.exports = Object.setPrototypeOf({
         init: function (results, verbose) {
@@ -36,6 +37,6 @@
 
             rows.push(`${getTabs(this.indent)} ${t} ${name}`);
         }
-    }, require('./printer'));
+    }, printer);
 })();
 

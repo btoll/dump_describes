@@ -3,14 +3,15 @@
 
 (() => {
     let esprima = require('esprima'),
-        visitor = require('./lib/visitor');
+        visitor = require('./lib/visitor'),
+        fs = require('fs');
 
     function getSuite(file, isData) {
         return new Promise((resolve, reject) => {
             if (isData) {
                 resolve(file);
             } else {
-                require('fs').readFile(file, 'utf8', (err, fileContents) => {
+                fs.readFile(file, 'utf8', (err, fileContents) => {
                     if (err) {
                         reject('[ERROR] There was a problem processing the file');
                     } else {
