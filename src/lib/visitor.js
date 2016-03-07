@@ -138,8 +138,6 @@
                         operator + getNodeValue.call(this, arg) :
                         getNodeValue.call(this, arg) + operator;
                 }
-
-                return node.name;
             };
         })(),
 
