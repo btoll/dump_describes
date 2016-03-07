@@ -12,6 +12,7 @@ describe('dump_describes', () => {
         binaryExpressionString = "'foo' + bar",
         conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'",
         memberExpressionString = "'baz' + foo.bar + foo['quux']",
+        templateLiteralString = '`baz ${foo.bar}`',
         unaryExpressionString = "typeof ''",
         mock;
 
@@ -160,8 +161,8 @@ describe('dump_describes', () => {
                 let binaryExpressionSuite = "describe('foo' + bar, () => {});",
                     conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});",
                     memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});",
+                    templateLiteralSuite = 'describe(`baz ${foo.bar}`, () => {});',
                     unaryExpressionSuite = "describe(typeof '', () => {});",
-
                     verbose = false;
 
                 describe('BinaryExpression', () => {
@@ -194,6 +195,16 @@ describe('dump_describes', () => {
                     });
                 });
 
+                describe('TemplateLiteral', () => {
+                    it('should have file support', (done) => {
+                        doHaystackTest(basicSuite, templateLiteralString, verbose, false, done);
+                    });
+
+                    it('should have input support', (done) => {
+                        doHaystackTest(templateLiteralSuite, templateLiteralString, verbose, true, done);
+                    });
+                });
+
                 describe('UnaryExpression', () => {
                     it('should have file support', (done) => {
                         doHaystackTest(basicSuite, unaryExpressionString, verbose, false, done);
@@ -209,6 +220,7 @@ describe('dump_describes', () => {
                 let binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});",
                     conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});",
                     memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});",
+                    templateLiteralSuite = "describe('test', () => { it(`baz ${foo.bar}`, () => {});});",
                     unaryExpressionSuite = "describe('test', () => { it(typeof '', () => {});});",
                     verbose = true;
 
@@ -239,6 +251,16 @@ describe('dump_describes', () => {
 
                     it('should have input support', (done) => {
                         doHaystackTest(memberExpressionSuite, memberExpressionString, verbose, true, done);
+                    });
+                });
+
+                describe('TemplateLiteral', () => {
+                    it('should have file support', (done) => {
+                        doHaystackTest(basicSuite, templateLiteralString, verbose, false, done);
+                    });
+
+                    it('should have input support', (done) => {
+                        doHaystackTest(templateLiteralSuite, templateLiteralString, verbose, true, done);
                     });
                 });
 

@@ -25,6 +25,14 @@
                 value = this.getMemberExpression(node);
                 break;
 
+            case 'TemplateElement':
+                value = this.getTemplateElement(node);
+                break;
+
+            case 'TemplateLiteral':
+                value = this.getTemplateLiteral(node);
+                break;
+
             case 'UnaryExpression':
                 value = this.getUnaryExpression(node);
                 break;
@@ -119,6 +127,30 @@
             let computed = node.computed;
 
             return `${(computed ? '[' : '.')}${getNodeValue.call(this, node.property)}${(computed ? ']' : '')}`;
+        },
+
+        getTemplateElement: function (node) {
+            return node.value.raw;
+        },
+
+        getTemplateLiteral: function (node) {
+            let a = [];
+
+            for (let i = 0, len = node.quasis.length; i < len; i++) {
+                let n = node.quasis[i];
+
+                if (!n.value.raw) {
+                    a.push(
+                        '${',
+                        getNodeValue.call(this, node.expressions[0]),
+                        '}'
+                    );
+                } else {
+                    a.push(getNodeValue.call(this, n));
+                }
+            }
+
+            return `\`${a.join('')}\``;
         },
 
         getUnaryExpression: (() => {

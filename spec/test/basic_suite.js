@@ -25,6 +25,11 @@ describe('test', () => {
             it('should ' + typeof '', () => {
             });
         });
+
+        describe(`baz ${foo.bar}`, () => {
+            it(`baz ${foo.bar}`, () => {
+            });
+        });
     });
 });
 
