@@ -12,9 +12,9 @@
         return tabs;
     },
     rows = [],
-    printer = require('./printer');
+    indent = 0;
 
-    module.exports = Object.setPrototypeOf({
+    module.exports = {
         print: function (results, verbose) {
             // Usually not needed to reset `rows` list except when running tests.
             rows.length = 0;
@@ -36,26 +36,26 @@
                     `(${type})` :
                     `${type} ->`;
 
-                rows.push(`${getTabs(this.indent)} ${t} ${name}`);
+                rows.push(`${getTabs(indent)} ${t} ${name}`);
             }
 
             return function (map, verbose) {
-                this.indent++;
+                indent++;
 
                 for (let entry of map.entries()) {
                     let entry1 = entry[1],
                         map = entry1.map;
 
-                    getRow.call(this, entry[0], (verbose && !map ? entry1 : entry1.identifier));
+                    getRow(entry[0], (verbose && !map ? entry1 : entry1.identifier));
 
                     if (map && map.size) {
                         this.makeNode(map, verbose);
                     }
                 }
 
-                this.indent--;
+                indent--;
             };
         })()
-    }, printer);
+    };
 })();
 

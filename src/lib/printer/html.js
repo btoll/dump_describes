@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-    let printer = require('./printer');
+    let indent = 0;
 
     function makeTpl(header, suite) {
         return `
@@ -109,7 +109,7 @@
         `;
     }
 
-    module.exports = Object.setPrototypeOf({
+    module.exports = {
         print: function (results, verbose) {
             return new Promise((resolve, reject) => {
                 for (let m of results.entries()) {
@@ -133,7 +133,7 @@
 
         makeNode: (() => {
             function getRow(name, type) {
-                return `<p class="${this.indent < 2 ? 'stripe' : ''}">
+                return `<p class="${indent < 2 ? 'stripe' : ''}">
                     <span class="${type}">
                         ${
                             type.indexOf('describe') > -1 ?
@@ -146,18 +146,18 @@
             }
 
             return function (map, buf, verbose) {
-                this.indent++;
+                indent++;
 
                 for (let entry of map.entries()) {
                     let entry1 = entry[1],
                         map = entry1.map,
-                        leftPadding = !(this.indent < 2) ? 'padding-left: 50px;' : '';
+                        leftPadding = !(indent < 2) ? 'padding-left: 50px;' : '';
 
                     if (map || !verbose) {
                         let child = [];
 
                         buf.push(`<div style="${leftPadding}">`);
-                        child.push(getRow.call(this, entry[0], entry1.identifier));
+                        child.push(getRow(entry[0], entry1.identifier));
 
                         // Note that will send an enclosing DIV to wrap all the children for
                         // the collapse/expand behavior.
@@ -176,11 +176,11 @@
                     }
                 }
 
-                this.indent--;
+                indent--;
 
                 return buf.join('');
             };
         })()
-    }, printer);
+    };
 })();
 
