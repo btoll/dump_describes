@@ -3,43 +3,8 @@
 (() => {
     let printer = require('./printer');
 
-    module.exports = Object.setPrototypeOf({
-        makeChildNode: function (name, type) {
-            return `<p class="${this.indent < 2 ? 'stripe' : ''}">
-                <span class="${type}">
-                    ${
-                        type.indexOf('describe') > -1 ?
-                        `(<a href="#">${type}</a>)` :
-                        `${type} -> `
-                    }
-                </span>
-                <span>${name}</span>
-            </p>`;
-        },
-
-        init: function (results, verbose) {
-            return new Promise((resolve, reject) => {
-                for (let m of results.entries()) {
-                    let suiteName = m[0],
-                        // Trim quotes from the begin and end of the suiteName.
-                        newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html',
-                        tpl;
-
-                    tpl = this.makeTpl(suiteName, this.print(m[1].map, [], verbose));
-
-                    require('fs').writeFile(newFile, tpl, 'utf8', (err) => {
-                        if (err) {
-                            reject('[ERROR] Oh no, something went wrong!');
-                        } else {
-                            resolve('Suite ' + newFile + ' created successfully!');
-                        }
-                    });
-                }
-            });
-        },
-
-        makeTpl: (header, suite) => {
-            return `
+    function makeTpl(header, suite) {
+        return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -141,44 +106,81 @@
     </script>
 </body>
 </html>
-            `;
+        `;
+    }
+
+    module.exports = Object.setPrototypeOf({
+        print: function (results, verbose) {
+            return new Promise((resolve, reject) => {
+                for (let m of results.entries()) {
+                    let suiteName = m[0],
+                        // Trim quotes from the begin and end of the suiteName.
+                        newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html',
+                        tpl;
+
+                    tpl = makeTpl(suiteName, this.makeNode(m[1].map, [], verbose));
+
+                    require('fs').writeFile(newFile, tpl, 'utf8', (err) => {
+                        if (err) {
+                            reject('[ERROR] Oh no, something went wrong!');
+                        } else {
+                            resolve('Suite ' + newFile + ' created successfully!');
+                        }
+                    });
+                }
+            });
         },
 
-        print: function (map, buf, verbose) {
-            this.indent++;
-
-            for (let entry of map.entries()) {
-                let entry1 = entry[1],
-                    map = entry1.map,
-                    leftPadding = !(this.indent < 2) ? 'padding-left: 50px;' : '';
-
-                if (map || !verbose) {
-                    let child = [];
-
-                    buf.push(`<div style="${leftPadding}">`);
-                    child.push(this.makeChildNode(entry[0], entry1.identifier));
-
-                    // Note that will send an enclosing DIV to wrap all the children for
-                    // the collapse/expand behavior.
-                    child.push(
-                        this.print(map, ['<div>'], verbose),
-                        '</div>'
-                    );
-
-                    buf.push(child.join(''), '</div>');
-                } else {
-                    buf.push(
-                        `<div style="${leftPadding}">`,
-                        this.makeChildNode(entry[0], entry1),
-                        '</div>'
-                    );
-                }
+        makeNode: (() => {
+            function getRow(name, type) {
+                return `<p class="${this.indent < 2 ? 'stripe' : ''}">
+                    <span class="${type}">
+                        ${
+                            type.indexOf('describe') > -1 ?
+                            `(<a href="#">${type}</a>)` :
+                            `${type} -> `
+                        }
+                    </span>
+                    <span>${name}</span>
+                </p>`;
             }
 
-            this.indent--;
+            return function (map, buf, verbose) {
+                this.indent++;
 
-            return buf.join('');
-        }
+                for (let entry of map.entries()) {
+                    let entry1 = entry[1],
+                        map = entry1.map,
+                        leftPadding = !(this.indent < 2) ? 'padding-left: 50px;' : '';
+
+                    if (map || !verbose) {
+                        let child = [];
+
+                        buf.push(`<div style="${leftPadding}">`);
+                        child.push(getRow.call(this, entry[0], entry1.identifier));
+
+                        // Note that will send an enclosing DIV to wrap all the children for
+                        // the collapse/expand behavior.
+                        child.push(
+                            this.makeNode(map, ['<div>'], verbose),
+                            '</div>'
+                        );
+
+                        buf.push(child.join(''), '</div>');
+                    } else {
+                        buf.push(
+                            `<div style="${leftPadding}">`,
+                            getRow.call(this, entry[0], entry1),
+                            '</div>'
+                        );
+                    }
+                }
+
+                this.indent--;
+
+                return buf.join('');
+            };
+        })()
     }, printer);
 })();
 

@@ -40,7 +40,7 @@
             if (!contents.size) {
                 return `dump_describes: No results found for suite ${file}`;
             } else {
-                return printer.init(contents, verbose);
+                return printer.print(contents, verbose);
             }
         });
     }

@@ -9,23 +9,12 @@
             writable: true
         },
 
+        makeNode: {
+            value: () => {}
+        },
+
         print: {
-            value: function (map, verbose) {
-                this.indent++;
-
-                for (let entry of map.entries()) {
-                    let entry1 = entry[1],
-                        map = entry1.map;
-
-                    this.captureRow(entry[0], (verbose && !map ? entry1 : entry1.identifier));
-
-                    if (map && map.size) {
-                        this.print(map, verbose);
-                    }
-                }
-
-                this.indent--;
-            }
+            value: () => {}
         }
     });
 })();
