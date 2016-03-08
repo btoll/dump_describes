@@ -63,6 +63,14 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
+## Creating a Custom Printer
+
+**dump_describes** ships with two printers, [LOG] and [HTML].
+
+However, it's very easy to create a printer. The only stipulation is that the printer module expose a `print` method, which is called with the node results and the value of `verbose`.
+
+`print` must return a Promise, which in turn will resolve with the list of transformed results or a simple message or something else, depending on the requirements.
+
 ## Using with Vim
 
 I use the following command abbreviations to view a suite from within Vim.
@@ -93,4 +101,6 @@ Benjamin Toll
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
 [Mocha]: http://mochajs.org/
+[HTML]: /src/lib/printer/html.js
+[LOG]: /src/lib/printer/log.js
 
