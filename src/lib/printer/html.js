@@ -90,7 +90,7 @@
     <script>
     'use strict';
 
-    document.body.addEventListener('click', (event) => {
+    document.body.addEventListener('click', event => {
         let target = event.target;
 
         if (target.tagName.toUpperCase() === 'A') {
@@ -120,7 +120,7 @@
 
                     tpl = makeTpl(suiteName, this.makeNode(m[1].map, [], verbose));
 
-                    require('fs').writeFile(newFile, tpl, 'utf8', (err) => {
+                    require('fs').writeFile(newFile, tpl, 'utf8', err => {
                         if (err) {
                             reject('[ERROR] Oh no, something went wrong!');
                         } else {

@@ -34,7 +34,7 @@
         console.log('Just a moment while we crunch your suite...');
 
         return getSuite(file, isData)
-        .then((suite) => {
+        .then(suite => {
             let contents = visitTree(suite, verbose);
 
             if (!contents.size) {

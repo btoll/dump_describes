@@ -2,7 +2,7 @@
 'use strict';
 
 (() => {
-    let getTabs = (indent) => {
+    let getTabs = indent => {
         let tabs = '';
 
         while (indent) {
@@ -20,7 +20,7 @@
             rows.length = 0;
 
             // A Promise isn't strictly necessary here.
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 for (let entry of results.entries()) {
                     rows.push(`Test suite ${entry[0]}`);
                     this.makeNode(entry[1].map, verbose);

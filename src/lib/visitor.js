@@ -107,11 +107,11 @@
             ].join(' ');
         },
 
-        getIdentifier: (node) => {
+        getIdentifier: node => {
             return node.name;
         },
 
-        getLiteral: (node) => {
+        getLiteral: node => {
             return node.raw;
         },
 
