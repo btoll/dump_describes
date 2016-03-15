@@ -9,6 +9,10 @@
                 value = this.getBinaryExpression(node);
                 break;
 
+            case 'CallExpression':
+                value = this.getCallExpression(node);
+                break;
+
             case 'ConditionalExpression':
                 value = this.getConditionalExpression(node);
                 break;
@@ -40,8 +44,34 @@
 
         return value;
     },
+    functionExpressionTypes = new Set(['ArrowFunctionExpression', 'FunctionExpression']),
     reDescribe = /[f|x]?describe/,
     reIt = /[f|x]?it/;
+
+    function isFunctionExpressionType(type) {
+        return functionExpressionTypes.has(type);
+    }
+
+    function parseArguments(args) {
+        // We're always parsing arguments from a MemberExpression here so it's necessary
+        // to enclose them in parens.
+        let parsed = args.map((arg) => {
+                return getNodeValue.call(this, arg);
+            }).join(', '),
+            arr = [parsed];
+
+        if (args.length) {
+            if (!isFunctionExpressionType(args[0].type)) {
+                arr.unshift('(');
+            }
+        } else {
+            arr.unshift('(');
+        }
+
+        arr.push(')');
+
+        return arr.join('');
+    }
 
     module.exports = Object.setPrototypeOf({
         checkCallExpression: function (node, results) {
@@ -95,6 +125,10 @@
             );
 
             return value = value.join(' ');
+        },
+
+        getCallExpression: function (node) {
+            return getNodeValue.call(this, node.callee) + parseArguments.call(this, node.arguments);
         },
 
         getConditionalExpression: function (node) {
