@@ -10,6 +10,7 @@ describe('dump_describes', () => {
         basicSuite = 'spec/test/basic_suite.js',
         transpiledSuite = 'spec/test/transpiled_suite.js',
         binaryExpressionString = "'foo' + bar",
+        callExpressionString = "quux() + 'baz ' + foo('derp').bar()",
         conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'",
         memberExpressionString = "'baz' + foo.bar + foo['quux']",
         templateLiteralString = '`baz ${foo.bar}`',
@@ -159,6 +160,7 @@ describe('dump_describes', () => {
         describe('suite and spec titles', () => {
             describe('describe blocks', () => {
                 let binaryExpressionSuite = "describe('foo' + bar, () => {});",
+                    callExpressionSuite = "describe(quux() + 'baz ' + foo('derp').bar(), () => {});",
                     conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});",
                     memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});",
                     templateLiteralSuite = 'describe(`baz ${foo.bar}`, () => {});',
@@ -172,6 +174,16 @@ describe('dump_describes', () => {
 
                     it('should have input support', done => {
                         doHaystackTest(binaryExpressionSuite, binaryExpressionString, verbose, true, done);
+                    });
+                });
+
+                describe('CallExpression', () => {
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuite, callExpressionString, verbose, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(callExpressionSuite, callExpressionString, verbose, true, done);
                     });
                 });
 
@@ -218,6 +230,7 @@ describe('dump_describes', () => {
 
             describe('it blocks', () => {
                 let binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});",
+                    callExpressionSuite = "describe('test', () => { it(quux() + 'baz ' + foo('derp').bar(), () => {});});",
                     conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});",
                     memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});",
                     templateLiteralSuite = "describe('test', () => { it(`baz ${foo.bar}`, () => {});});",
@@ -231,6 +244,16 @@ describe('dump_describes', () => {
 
                     it('should have input support', done => {
                         doHaystackTest(binaryExpressionSuite, binaryExpressionString, verbose, true, done);
+                    });
+                });
+
+                describe('CallExpression', () => {
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuite, callExpressionString, verbose, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(callExpressionSuite, callExpressionString, verbose, true, done);
                     });
                 });
 

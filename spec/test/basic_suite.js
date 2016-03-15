@@ -3,7 +3,8 @@
 
 describe('test', () => {
     let bar,
-        foo = {};
+        foo = {},
+        quux = () => {};
 
     describe('foo', () => {
         describe('foo' + bar, () => {
@@ -28,6 +29,11 @@ describe('test', () => {
 
         describe(`baz ${foo.bar}`, () => {
             it(`baz ${foo.bar}`, () => {
+            });
+        });
+
+        describe(quux() + 'baz ' + foo('derp').bar(), () => {
+            it(quux() + 'baz ' + foo().bar(), () => {
             });
         });
     });
