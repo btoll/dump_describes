@@ -63,6 +63,12 @@ Pipe:
 
     dump_describes -f Filters.js | tee foo
 
+Let's get fancy and open a file from the internet in the default browser:
+
+    curl https://raw.githubusercontent.com/btoll/dump_describes/master/spec/dump_describes_spec.js | dump_describes -v --html | cut -d' ' -f2 | xargs open
+
+* Note that the pipeline is using `open` which is an OS X tool.
+
 ## Creating a Custom Printer
 
 **dump_describes** ships with two printers, [LOG] and [HTML].

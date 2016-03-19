@@ -31,7 +31,8 @@
             throw new Error('dump_describes: No printer given');
         }
 
-        console.log('Just a moment while we crunch your suite...');
+        // TODO: Keep this?
+//        console.log('Just a moment while we crunch your suite...');
 
         return getSuite(file, isData)
         .then(suite => {

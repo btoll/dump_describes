@@ -124,7 +124,7 @@
                         if (err) {
                             reject('[ERROR] Oh no, something went wrong!');
                         } else {
-                            resolve('Suite ' + newFile + ' created successfully!');
+                            resolve(`Suite ${newFile} created successfully!`);
                         }
                     });
                 }
