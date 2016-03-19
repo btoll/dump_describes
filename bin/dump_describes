@@ -23,12 +23,12 @@ let argv = require('yargs')
     // Default to logging to stdout.
     printer = require(`../src/lib/printer/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
-    file = argv.file;
-
+    file = argv.file,
+    log = console.log;
 
 if (!file) {
     let stdin = process.stdin,
-        buf;
+        buf = '';
 
     stdin.setEncoding('utf8');
 
@@ -42,12 +42,12 @@ if (!file) {
 
     stdin.on('end', () => {
         makeTree(buf, printer, argv.verbose, true)
-        .then(console.log)
-        .catch(console.log);
+        .then(log)
+        .catch(log);
     });
 } else {
     makeTree(file, printer, argv.verbose, false)
-    .then(console.log)
-    .catch(console.log);
+    .then(log)
+    .catch(log);
 }
 
