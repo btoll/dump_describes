@@ -38,11 +38,9 @@
         .then(suite => {
             let contents = visitTree(suite, verbose);
 
-            if (!contents.size) {
-                return `dump_describes: No results found for suite ${file}`;
-            } else {
-                return printer.print(contents, verbose);
-            }
+            return !contents.size ?
+                `dump_describes: No results found for suite ${file}` :
+                printer.print(contents, verbose);
         });
     }
 

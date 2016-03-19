@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 (() => {
@@ -6,7 +5,7 @@
         let tabs = '';
 
         while (indent) {
-            return getTabs(--indent) + '\t';
+            return `${getTabs(--indent)} \t`;
         }
 
         return tabs;
