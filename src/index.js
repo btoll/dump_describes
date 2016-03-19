@@ -3,8 +3,13 @@
 
 (() => {
     let esprima = require('esprima'),
+        chalk = require('chalk'),
         visitor = require('./lib/visitor'),
         fs = require('fs');
+
+    function displayError(s) {
+        return `${chalk.red('[ERROR]')} No ${s} given`;
+    }
 
     function getSuite(file, isData) {
         return new Promise((resolve, reject) => {
@@ -13,7 +18,7 @@
             } else {
                 fs.readFile(file, 'utf8', (err, fileContents) => {
                     if (err) {
-                        reject('[ERROR] There was a problem processing the file');
+                        reject(`${chalk.red('[ERROR]')} There was a problem processing the file`);
                     } else {
                         resolve(fileContents);
                     }
@@ -24,11 +29,11 @@
 
     function makeTree(file, printer, verbose, isData) {
         if (!file) {
-            throw new Error('dump_describes: No file given');
+            return displayError('file');
         }
 
         if (!printer) {
-            throw new Error('dump_describes: No printer given');
+            return displayError('print');
         }
 
         // TODO: Keep this?
@@ -39,7 +44,7 @@
             let contents = visitTree(suite, verbose);
 
             return !contents.size ?
-                `dump_describes: No results found for suite ${file}` :
+                `${chalk.yellow('[INFO]')} No results found for suite ${file}` :
                 printer.print(contents, verbose);
         });
     }

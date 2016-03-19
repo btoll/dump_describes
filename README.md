@@ -49,7 +49,7 @@ The following will dump the result of processing the `Filters.js` suite to `stdo
 
 Also, dump `it` blocks:
 
-        dump_describes -f Filters.js -v
+    dump_describes -f Filters.js -v
 
 Create an `html` document of the same tree produced by the previous command (`describe` nodes can be expanded/collapsed):
 
@@ -65,9 +65,9 @@ Pipe:
 
 Let's get fancy and open a file from the internet in the default browser:
 
-    curl https://raw.githubusercontent.com/btoll/dump_describes/master/spec/dump_describes_spec.js | dump_describes -v --html | cut -d' ' -f2 | xargs open
+    curl http://bit.ly/1UezNMy | dump_describes -v --html | cut -d' ' -f2 | xargs open
 
-* Note that the pipeline is using `open` which is an OS X tool.
+* Note that the above pipeline is using `open` which is an OS X tool.
 
 ## Creating a Custom Printer
 

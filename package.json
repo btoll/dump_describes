@@ -30,6 +30,7 @@
   "author": "Benjamin Toll <benjam72@yahoo.com> (http://www.benjamintoll.com)",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.1",
     "esprima": "^2.7.0",
     "yargs": "^3.29.0"
   },
