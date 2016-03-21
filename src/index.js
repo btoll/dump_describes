@@ -7,10 +7,6 @@
         visitor = require('./lib/visitor'),
         fs = require('fs');
 
-    function displayError(s) {
-        return `${chalk.red('[ERROR]')} No ${s} given`;
-    }
-
     function getSuite(file, isData) {
         return new Promise((resolve, reject) => {
             if (isData) {
@@ -29,11 +25,11 @@
 
     function makeTree(file, printer, verbose, isData) {
         if (!file) {
-            return displayError('file');
+            throw new Error(`${chalk.red('[ERROR]')} No file given`);
         }
 
         if (!printer) {
-            return displayError('print');
+            throw new Error(`${chalk.red('[ERROR]')} No printer given`);
         }
 
         // TODO: Keep this?
