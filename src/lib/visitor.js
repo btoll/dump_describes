@@ -210,13 +210,11 @@
         visit: function (object, results) {
             results = this.collect(object, results);
 
-            for (let n in object) {
-                if (object.hasOwnProperty(n)) {
-                    let obj = object[n];
+            for (let key of Object.keys(object)) {
+                let obj = object[key];
 
-                    if (typeof obj === 'object' && obj !== null) {
-                        this.visit(obj, results);
-                    }
+                if (typeof obj === 'object' && obj !== null) {
+                    this.visit(obj, results);
                 }
             }
 

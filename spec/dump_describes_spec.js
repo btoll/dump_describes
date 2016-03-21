@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 'use strict';
 
-// TODO: Template string support.
-
 describe('dump_describes', () => {
     let dumpDescribes = require('../src/index'),
         printer = require('../src/lib/printer/log'),
