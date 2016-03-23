@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-    let getTabs = indent => {
-        let tabs = '';
+    const getTabs = indent => {
+        const tabs = '';
 
         while (indent) {
             return `${getTabs(--indent)} \t`;
@@ -10,8 +10,8 @@
 
         return tabs;
     },
-    rows = [],
-    indent = 0;
+    rows = [];
+    let indent = 0;
 
     module.exports = {
         print: function (results, verbose) {
@@ -20,7 +20,7 @@
 
             // A Promise isn't strictly necessary here.
             return new Promise(resolve => {
-                for (let entry of results.entries()) {
+                for (const entry of results.entries()) {
                     rows.push(`Test suite ${entry[0]}`);
                     this.makeNode(entry[1].map, verbose);
                 }
@@ -31,7 +31,7 @@
 
         makeNode: (() => {
             function getRow(name, type) {
-                let t = type.indexOf('describe') > -1 ?
+                const t = type.indexOf('describe') > -1 ?
                     `(${type})` :
                     `${type} ->`;
 
@@ -41,8 +41,8 @@
             return function (map, verbose) {
                 indent++;
 
-                for (let entry of map.entries()) {
-                    let entry1 = entry[1],
+                for (const entry of map.entries()) {
+                    const entry1 = entry[1],
                         map = entry1.map;
 
                     getRow(entry[0], (verbose && !map ? entry1 : entry1.identifier));

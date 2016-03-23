@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-    let chalk = require('chalk'),
-        indent = 0;
+    const chalk = require('chalk');
+    let indent = 0;
 
     function makeTpl(header, suite) {
         return `
@@ -92,10 +92,10 @@
     'use strict';
 
     document.body.addEventListener('click', event => {
-        let target = event.target;
+        const target = event.target;
 
         if (target.tagName.toUpperCase() === 'A') {
-            let style = target.parentNode.parentNode.nextElementSibling.style;
+            const style = target.parentNode.parentNode.nextElementSibling.style;
 
             style.display = (style.display === 'none') ?
                 'block' :
@@ -113,11 +113,11 @@
     module.exports = {
         print: function (results, verbose) {
             return new Promise((resolve, reject) => {
-                for (let m of results.entries()) {
-                    let suiteName = m[0],
+                for (const m of results.entries()) {
+                    const suiteName = m[0],
                         // Trim quotes from the begin and end of the suiteName.
-                        newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html',
-                        tpl;
+                        newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html';
+                    let tpl;
 
                     tpl = makeTpl(suiteName, this.makeNode(m[1].map, [], verbose));
 
@@ -149,13 +149,13 @@
             return function (map, buf, verbose) {
                 indent++;
 
-                for (let entry of map.entries()) {
-                    let entry1 = entry[1],
+                for (const entry of map.entries()) {
+                    const entry1 = entry[1],
                         map = entry1.map,
                         leftPadding = !(indent < 2) ? 'padding-left: 50px;' : '';
 
                     if (map || !verbose) {
-                        let child = [];
+                        const child = [];
 
                         buf.push(`<div style="${leftPadding}">`);
                         child.push(getRow(entry[0], entry1.identifier));

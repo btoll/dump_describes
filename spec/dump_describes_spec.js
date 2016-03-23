@@ -2,7 +2,7 @@
 'use strict';
 
 describe('dump_describes', () => {
-    let dumpDescribes = require('../src/index'),
+    const dumpDescribes = require('../src/index'),
         printer = require('../src/lib/printer/log'),
         visitor = require('../src/lib/visitor'),
         basicSuite = 'spec/test/basic_suite.js',
@@ -12,8 +12,9 @@ describe('dump_describes', () => {
         conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'",
         memberExpressionString = "'baz' + foo.bar + foo['quux']",
         templateLiteralString = '`baz ${foo.bar}`',
-        unaryExpressionString = "typeof ''",
-        mock;
+        unaryExpressionString = "typeof ''";
+
+    let mock;
 
     // "Turn off" logging in the app.
     console.log = () => {};
@@ -87,7 +88,7 @@ describe('dump_describes', () => {
         });
 
         describe('no-ops', () => {
-            let needle = 'No results found',
+            const needle = 'No results found',
                 verbose = false;
 
             it('should not return any results when given invalid code', done => {
@@ -126,10 +127,10 @@ describe('dump_describes', () => {
 
         // Note that these tests were added after seeing some suites transpiled into JavaScript.
         describe('when part of return statements', () => {
-            let suite = "(() => { return describe('transpiled', () => { describe('when foo', () => { it('should derp', () => { expect(2 + 2).toBe(4); }); }); return describe('when bar', () => { it('should herp', () => { expect([1, 2, 4].length).toBe(3); }); return it('should double derp', () => { expect({}).not.toBe({}); }); }); }); });";
+            const suite = "(() => { return describe('transpiled', () => { describe('when foo', () => { it('should derp', () => { expect(2 + 2).toBe(4); }); }); return describe('when bar', () => { it('should herp', () => { expect([1, 2, 4].length).toBe(3); }); return it('should double derp', () => { expect({}).not.toBe({}); }); }); }); });";
 
             describe('describe blocks', () => {
-                let needle = 'when foo',
+                const needle = 'when foo',
                     verbose = false;
 
                 it('should work when returned from a block (file)', done => {
@@ -142,7 +143,7 @@ describe('dump_describes', () => {
             });
 
             describe('it blocks', () => {
-                let needle = 'should double derp',
+                const needle = 'should double derp',
                     verbose = true;
 
                 it('should work when returned from a block (file)', done => {
@@ -157,7 +158,7 @@ describe('dump_describes', () => {
 
         describe('suite and spec titles', () => {
             describe('describe blocks', () => {
-                let binaryExpressionSuite = "describe('foo' + bar, () => {});",
+                const binaryExpressionSuite = "describe('foo' + bar, () => {});",
                     callExpressionSuite = "describe(quux() + 'baz ' + foo('derp').bar(), () => {});",
                     conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});",
                     memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});",
@@ -227,7 +228,7 @@ describe('dump_describes', () => {
             });
 
             describe('it blocks', () => {
-                let binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});",
+                const binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});",
                     callExpressionSuite = "describe('test', () => { it(quux() + 'baz ' + foo('derp').bar(), () => {});});",
                     conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});",
                     memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});",

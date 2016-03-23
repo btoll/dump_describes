@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-    let getNodeValue = function (node) {
+    const getNodeValue = function (node) {
         let value;
 
         switch (node.type) {
@@ -55,9 +55,7 @@
     function parseArguments(args) {
         // We're always parsing arguments from a MemberExpression here so it's necessary
         // to enclose them in parens.
-        let parsed = args.map((arg) => {
-                return getNodeValue.call(this, arg);
-            }).join(', '),
+        const parsed = args.map((arg) => getNodeValue.call(this, arg)).join(', '),
             arr = [parsed];
 
         if (args.length) {
@@ -76,11 +74,11 @@
     module.exports = Object.setPrototypeOf({
         checkCallExpression: function (node, results) {
             if (node.type === 'CallExpression') {
-                let args = node.arguments,
+                const args = node.arguments,
                     name = node.callee.name;
 
                 if (reDescribe.test(name)) {
-                    let block = {
+                    const block = {
                         identifier: name,
                         map: new Map()
                     };
@@ -96,7 +94,7 @@
         },
 
         collect: function (node, results) {
-            let type = node.type;
+            const type = node.type;
 
             if (type === 'ExpressionStatement') {
                 return this.checkCallExpression(node.expression, results);
@@ -141,16 +139,12 @@
             ].join(' ');
         },
 
-        getIdentifier: node => {
-            return node.name;
-        },
+        getIdentifier: node => node.name,
 
-        getLiteral: node => {
-            return node.raw;
-        },
+        getLiteral: node => node.raw,
 
         getMemberExpression: function (node) {
-            let nestedObj = node.object;
+            const nestedObj = node.object;
 
             while (nestedObj) {
                 return getNodeValue.call(this, nestedObj) + this.getProperty(node);
@@ -158,7 +152,7 @@
         },
 
         getProperty: function (node) {
-            let computed = node.computed;
+            const computed = node.computed;
 
             return `${(computed ? '[' : '.')}${getNodeValue.call(this, node.property)}${(computed ? ']' : '')}`;
         },
@@ -168,10 +162,10 @@
         },
 
         getTemplateLiteral: function (node) {
-            let a = [];
+            const a = [];
 
             for (let i = 0, len = node.quasis.length; i < len; i++) {
-                let n = node.quasis[i];
+                const n = node.quasis[i];
 
                 if (!n.value.raw) {
                     a.push(
@@ -188,12 +182,12 @@
         },
 
         getUnaryExpression: (() => {
-            let needsPadding = new Set(['delete', 'instanceof', 'typeof']);
+            const needsPadding = new Set(['delete', 'instanceof', 'typeof']);
 
             return function (node) {
-                let arg = node.argument,
-                    // Pad the operator in cases where it's `delete`, `typeof`, etc.
-                    operator = node.operator;
+                const arg = node.argument;
+                // Pad the operator in cases where it's `delete`, `typeof`, etc.
+                let operator = node.operator;
 
                 if (needsPadding.has(operator)) {
                     operator = ' ' + operator + ' ';
@@ -210,8 +204,8 @@
         visit: function (object, results) {
             results = this.collect(object, results);
 
-            for (let key of Object.keys(object)) {
-                let obj = object[key];
+            for (const key of Object.keys(object)) {
+                const obj = object[key];
 
                 if (typeof obj === 'object' && obj !== null) {
                     this.visit(obj, results);

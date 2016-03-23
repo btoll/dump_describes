@@ -2,7 +2,7 @@
 'use strict';
 
 (() => {
-    let esprima = require('esprima'),
+    const esprima = require('esprima'),
         chalk = require('chalk'),
         visitor = require('./lib/visitor'),
         fs = require('fs');
@@ -37,7 +37,7 @@
 
         return getSuite(file, isData)
         .then(suite => {
-            let contents = visitTree(suite, verbose);
+            const contents = visitTree(suite, verbose);
 
             return !contents.size ?
                 `${chalk.yellow('[INFO]')} No results found for suite ${file}` :
