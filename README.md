@@ -36,6 +36,8 @@ The following identifiers are supported:
 
     Property | Description
     ------------ | -------------
+    --active | List only active blocks (i.e., `fdescribe`, `fit`)
+    --inactive | List only inactive blocks (i.e., `xdescribe`, `xit`)
     -f, --file | The suite to parse
     --html | Creates an html document of the tree
     -v, --verbose | Also dumps `it` blocks
@@ -50,6 +52,22 @@ The following will dump the result of processing the `Filters.js` suite to `stdo
 Also, dump `it` blocks:
 
     dump_describes -f Filters.js -v
+
+Only dump the 'active' `fdescribe` blocks to `stdout`:
+
+    dump_describes -f Filters.js --active
+
+Same as the previous, but in addition dump 'active' `fit` blocks to `stdout`:
+
+    dump_describes -f Filters.js --active
+
+Only dump the 'inactive' `xdescribe` blocks to `stdout`:
+
+    dump_describes -f Filters.js --inactive
+
+Same as the previous, but in addition dump 'inactive' `xit` blocks to `stdout`:
+
+    dump_describes -f Filters.js --inactive -v
 
 Create an `html` document of the same tree produced by the previous command (`describe` nodes can be expanded/collapsed):
 

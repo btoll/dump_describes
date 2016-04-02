@@ -23,7 +23,7 @@
         });
     }
 
-    function makeTree(file, printer, verbose, isData) {
+    function makeTree(file, printer, options, isData) {
         if (!file) {
             throw new Error(`${chalk.red('[ERROR]')} No file given`);
         }
@@ -32,22 +32,28 @@
             throw new Error(`${chalk.red('[ERROR]')} No printer given`);
         }
 
-        // TODO: Keep this?
-//        console.log('Just a moment while we crunch your suite...');
+        options = options || {};
 
         return getSuite(file, isData)
-        .then(suite => {
-            const contents = visitTree(suite, verbose);
+            .then(suite => {
+                const map = visitTree(suite, options);
 
-            return !contents.size ?
-                `${chalk.yellow('[INFO]')} No results found for suite ${file}` :
-                printer.print(contents, verbose);
-        });
+                return !map.size ?
+                    `${chalk.yellow('[INFO]')} No results found for suite ${file}` :
+                    printer.print(map, options.verbose);
+            });
     }
 
-    function visitTree(suite, verbose) {
-        visitor.verbose = !!verbose;
-        return visitor.visit(esprima.parse(suite), new Map());
+    function visitTree(suite, options) {
+        const map = new Map();
+        map.root = true;
+
+        // TODO: Make better?
+        visitor.active = !!options.active;
+        visitor.inactive = !!options.inactive;
+        visitor.verbose = !!options.verbose;
+
+        return visitor.visit(esprima.parse(suite), map);
     }
 
     module.exports = makeTree;

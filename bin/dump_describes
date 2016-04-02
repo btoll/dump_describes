@@ -9,6 +9,12 @@ const argv = require('yargs')
     .nargs('f', 1)
     .describe('f', 'The suite to parse')
 
+    .describe('active', 'List only active blocks (i.e., `fdescribe`, `fit`)')
+    .boolean('active')
+
+    .describe('inactive', 'List only inactive blocks (i.e., `xdescribe`, `xit`)')
+    .boolean('inactive')
+
     .describe('html', 'Creates an html document of the tree')
     .boolean('html')
 
@@ -24,7 +30,12 @@ const argv = require('yargs')
     printer = require(`../src/lib/printer/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
     file = argv.file,
-    log = console.log;
+    log = console.log,
+    options = {
+        active: argv.active,
+        inactive: argv.inactive,
+        verbose: argv.verbose
+    };
 
 if (!file) {
     const stdin = process.stdin;
@@ -41,12 +52,12 @@ if (!file) {
     });
 
     stdin.on('end', () => {
-        makeTree(buf, printer, argv.verbose, true)
+        makeTree(buf, printer, options, true)
         .then(log)
         .catch(log);
     });
 } else {
-    makeTree(file, printer, argv.verbose, false)
+    makeTree(file, printer, options, false)
     .then(log)
     .catch(log);
 }

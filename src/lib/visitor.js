@@ -1,52 +1,14 @@
+/* eslint-disable no-func-assign */
 'use strict';
 
 (() => {
-    const getNodeValue = function (node) {
-        let value;
-
-        switch (node.type) {
-            case 'BinaryExpression':
-                value = this.getBinaryExpression(node);
-                break;
-
-            case 'CallExpression':
-                value = this.getCallExpression(node);
-                break;
-
-            case 'ConditionalExpression':
-                value = this.getConditionalExpression(node);
-                break;
-
-            case 'Identifier':
-                value = this.getIdentifier(node);
-                break;
-
-            case 'Literal':
-                value = this.getLiteral(node);
-                break;
-
-            case 'MemberExpression':
-                value = this.getMemberExpression(node);
-                break;
-
-            case 'TemplateElement':
-                value = this.getTemplateElement(node);
-                break;
-
-            case 'TemplateLiteral':
-                value = this.getTemplateLiteral(node);
-                break;
-
-            case 'UnaryExpression':
-                value = this.getUnaryExpression(node);
-                break;
-        }
-
-        return value;
-    },
-    functionExpressionTypes = new Set(['ArrowFunctionExpression', 'FunctionExpression']),
-    reDescribe = /[f|x]?describe/,
-    reIt = /[f|x]?it/;
+    const functionExpressionTypes = new Set(['ArrowFunctionExpression', 'FunctionExpression']),
+        reDescribe = /^[f|x]?describe/,
+        reFDescribe = /^fdescribe/,
+        reXDescribe = /^xdescribe/,
+        reIt = /^[f|x]?it/,
+        reFIt = /^fit/,
+        reXIt = /^xit/;
 
     function isFunctionExpressionType(type) {
         return functionExpressionTypes.has(type);
@@ -55,7 +17,7 @@
     function parseArguments(args) {
         // We're always parsing arguments from a MemberExpression here so it's necessary
         // to enclose them in parens.
-        const parsed = args.map((arg) => getNodeValue.call(this, arg)).join(', '),
+        const parsed = args.map((arg) => this.getNodeValue(this, arg)).join(', '),
             arr = [parsed];
 
         if (args.length) {
@@ -72,21 +34,44 @@
     }
 
     module.exports = Object.setPrototypeOf({
+        // TODO: Fold test methods into one.
+        testDescribeBlock: function (name) {
+            const re = this.active ? reFDescribe :
+                this.inactive ? reXDescribe :
+                reDescribe;
+
+            this.testDescribeBlock = (name) => re.test(name);
+
+            return this.testDescribeBlock(name);
+        },
+
+        testItBlock: function (name) {
+            const re = this.active ? reFIt :
+                this.inactive ? reXIt :
+                reIt;
+
+            this.testItBlock = name => re.test(name);
+
+            return this.testItBlock(name);
+        },
+
         checkCallExpression: function (node, results) {
             if (node.type === 'CallExpression') {
                 const args = node.arguments,
                     name = node.callee.name;
 
-                if (reDescribe.test(name)) {
+                // Note that we always want the root 'describe' to pass regardless of the
+                // value of `active` or `inactive`.
+                if ((name === 'describe' && results.root) || this.testDescribeBlock(name)) {
                     const block = {
                         identifier: name,
                         map: new Map()
                     };
 
-                    results.set(getNodeValue.call(this, args[0]), block);
+                    results.set(this.getNodeValue(args[0]), block);
                     return this.visit(args[1].body, block.map);
-                } else if (this.verbose && reIt.test(name)) {
-                    results.set(getNodeValue.call(this, args[0]), name);
+                } else if (this.verbose && this.testItBlock(name)) {
+                    results.set(this.getNodeValue(args[0]), name);
                 }
             }
 
@@ -117,25 +102,25 @@
             let value = [];
 
             value.push(
-                getNodeValue.call(this, node.left),
+                this.getNodeValue(node.left),
                 node.operator,
-                getNodeValue.call(this, node.right)
+                this.getNodeValue(node.right)
             );
 
             return value = value.join(' ');
         },
 
         getCallExpression: function (node) {
-            return getNodeValue.call(this, node.callee) + parseArguments.call(this, node.arguments);
+            return this.getNodeValue(node.callee) + parseArguments.call(this, node.arguments);
         },
 
         getConditionalExpression: function (node) {
             return [
-                getNodeValue.call(this, node.test),
+                this.getNodeValue(node.test),
                 '?',
-                getNodeValue.call(this, node.consequent),
+                this.getNodeValue(node.consequent),
                 ':',
-                getNodeValue.call(this, node.alternate)
+                this.getNodeValue(node.alternate)
             ].join(' ');
         },
 
@@ -147,14 +132,58 @@
             const nestedObj = node.object;
 
             while (nestedObj) {
-                return getNodeValue.call(this, nestedObj) + this.getProperty(node);
+                return this.getNodeValue(nestedObj) + this.getProperty(node);
             }
+        },
+
+        getNodeValue: function (node) {
+            let value;
+
+            switch (node.type) {
+                case 'BinaryExpression':
+                    value = this.getBinaryExpression(node);
+                    break;
+
+                case 'CallExpression':
+                    value = this.getCallExpression(node);
+                    break;
+
+                case 'ConditionalExpression':
+                    value = this.getConditionalExpression(node);
+                    break;
+
+                case 'Identifier':
+                    value = this.getIdentifier(node);
+                    break;
+
+                case 'Literal':
+                    value = this.getLiteral(node);
+                    break;
+
+                case 'MemberExpression':
+                    value = this.getMemberExpression(node);
+                    break;
+
+                case 'TemplateElement':
+                    value = this.getTemplateElement(node);
+                    break;
+
+                case 'TemplateLiteral':
+                    value = this.getTemplateLiteral(node);
+                    break;
+
+                case 'UnaryExpression':
+                    value = this.getUnaryExpression(node);
+                    break;
+            }
+
+            return value;
         },
 
         getProperty: function (node) {
             const computed = node.computed;
 
-            return `${(computed ? '[' : '.')}${getNodeValue.call(this, node.property)}${(computed ? ']' : '')}`;
+            return `${(computed ? '[' : '.')}${this.getNodeValue(node.property)}${(computed ? ']' : '')}`;
         },
 
         getTemplateElement: function (node) {
@@ -170,11 +199,11 @@
                 if (!n.value.raw) {
                     a.push(
                         '${',
-                        getNodeValue.call(this, node.expressions[0]),
+                        this.getNodeValue(node.expressions[0]),
                         '}'
                     );
                 } else {
-                    a.push(getNodeValue.call(this, n));
+                    a.push(this.getNodeValue(n));
                 }
             }
 
@@ -195,8 +224,8 @@
 
                 while (arg) {
                     return (node.prefix) ?
-                        operator + getNodeValue.call(this, arg) :
-                        getNodeValue.call(this, arg) + operator;
+                        operator + this.getNodeValue(arg) :
+                        this.getNodeValue(arg) + operator;
                 }
             };
         })(),
