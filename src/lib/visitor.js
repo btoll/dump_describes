@@ -33,7 +33,7 @@
         return arr.join('');
     }
 
-    module.exports = Object.setPrototypeOf({
+    module.exports = {
         // TODO: Fold test methods into one.
         testDescribeBlock: function (name) {
             const re = this.active ? reFDescribe :
@@ -243,6 +243,6 @@
 
             return results;
         }
-    }, null);
+    };
 })();
 
