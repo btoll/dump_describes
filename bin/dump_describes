@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 'use strict';
 
-const argv = require('yargs')
+const logger = require('logger'),
+    argv = require('yargs')
     .usage('Usage: dump_describes [options]')
 
     .alias('f', 'file')
@@ -30,7 +30,8 @@ const argv = require('yargs')
     printer = require(`../src/lib/printer/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
     file = argv.file,
-    log = console.log,
+    info = logger.info,
+    error = logger.error,
     options = {
         active: argv.active,
         inactive: argv.inactive,
@@ -53,12 +54,12 @@ if (!file) {
 
     stdin.on('end', () => {
         makeTree(buf, printer, options, true)
-        .then(log)
-        .catch(log);
+        .then(info)
+        .catch(error);
     });
 } else {
     makeTree(file, printer, options, false)
-    .then(log)
-    .catch(log);
+    .then(info)
+    .catch(error);
 }
 

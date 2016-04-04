@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 describe('dump_describes', () => {
@@ -15,9 +14,6 @@ describe('dump_describes', () => {
         unaryExpressionString = "typeof ''";
 
     let mock;
-
-    // "Turn off" logging in the app.
-    console.log = () => {};
 
     function doHaystackTest(suite, needle, options, isData, done) {
         dumpDescribes(suite, printer, options, isData).then(data => {

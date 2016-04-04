@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
 'use strict';
 
 (() => {
     const esprima = require('esprima'),
-        chalk = require('chalk'),
         visitor = require('./lib/visitor'),
         fs = require('fs');
 
@@ -14,7 +12,7 @@
             } else {
                 fs.readFile(file, 'utf8', (err, fileContents) => {
                     if (err) {
-                        reject(`${chalk.red('[ERROR]')} There was a problem processing the file`);
+                        reject('There was a problem processing the file');
                     } else {
                         resolve(fileContents);
                     }
@@ -25,11 +23,11 @@
 
     function makeTree(file, printer, options, isData) {
         if (!file) {
-            throw new Error(`${chalk.red('[ERROR]')} No file given`);
+            throw new Error('[ERROR] No file given');
         }
 
         if (!printer) {
-            throw new Error(`${chalk.red('[ERROR]')} No printer given`);
+            throw new Error('[ERROR] No printer given');
         }
 
         options = options || {};
@@ -39,7 +37,7 @@
                 const map = visitTree(suite, options);
 
                 return !map.size ?
-                    `${chalk.yellow('[INFO]')} No results found for suite ${file}` :
+                    `No results found for suite ${file}` :
                     printer.print(map, options.verbose);
             });
     }

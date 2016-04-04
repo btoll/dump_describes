@@ -1,7 +1,6 @@
 'use strict';
 
 (() => {
-    const chalk = require('chalk');
     let indent = 0;
 
     function makeTpl(header, suite) {
@@ -123,7 +122,7 @@
 
                     require('fs').writeFile(newFile, tpl, 'utf8', err => {
                         if (err) {
-                            reject(`${chalk.red('[ERROR]')} Oh no, something went wrong!`);
+                            reject('Oh no, something went wrong!');
                         } else {
                             resolve(`Suite ${newFile} created successfully!`);
                         }
