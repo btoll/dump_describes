@@ -2,7 +2,7 @@
 
 describe('dump_describes', () => {
     const dumpDescribes = require('../src/index'),
-        printer = require('../src/lib/printer/log'),
+        generator = require('../src/lib/generator/log'),
         visitor = require('../src/lib/visitor'),
         basicSuite = 'spec/test/basic_suite.js',
         transpiledSuite = 'spec/test/transpiled_suite.js',
@@ -16,7 +16,7 @@ describe('dump_describes', () => {
     let mock;
 
     function doHaystackTest(suite, needle, options, isData, done) {
-        dumpDescribes(suite, printer, options, isData).then(data => {
+        dumpDescribes(suite, generator, options, isData).then(data => {
             expect(data.indexOf(needle)).toBeGreaterThan(-1);
             done();
         });
@@ -42,7 +42,7 @@ describe('dump_describes', () => {
 
     describe('making a suite', () => {
         it('should return a promise', () => {
-            expect(dumpDescribes('fakeFile', printer) instanceof Promise).toBe(true);
+            expect(dumpDescribes('fakeFile', generator) instanceof Promise).toBe(true);
         });
 
         it('should throw if not given a file', () => {
@@ -51,7 +51,7 @@ describe('dump_describes', () => {
             }).toThrow();
         });
 
-        it('should throw if not given a printer', () => {
+        it('should throw if not given a generator', () => {
             expect(() => {
                 dumpDescribes(basicSuite);
             }).toThrow();
@@ -61,24 +61,24 @@ describe('dump_describes', () => {
             describe('bad input', () => {
                 it('should throw if given a non-existent file', done => {
                     setupMockSpy(done);
-                    dumpDescribes('fakeFile', printer).catch(mock.f);
+                    dumpDescribes('fakeFile', generator).catch(mock.f);
                 });
 
                 it('should throw if given bad input', done => {
                     setupMockSpy(done);
-                    dumpDescribes('this is not a test suite', printer, {verbose: false}, true).catch(mock.f);
+                    dumpDescribes('this is not a test suite', generator, {verbose: false}, true).catch(mock.f);
                 });
             });
 
             describe('good input', () => {
                 it('should succeed when given an existing file', done => {
                     setupMockSpy(done);
-                    dumpDescribes(basicSuite, printer).then(mock.f);
+                    dumpDescribes(basicSuite, generator).then(mock.f);
                 });
 
                 it('should succeed when given good input', done => {
                     setupMockSpy(done);
-                    dumpDescribes('describe("foo", () => {});', printer, {verbose: false}, true).then(mock.f);
+                    dumpDescribes('describe("foo", () => {});', generator, {verbose: false}, true).then(mock.f);
                 });
             });
         });
@@ -109,17 +109,17 @@ describe('dump_describes', () => {
         describe('verbose', () => {
             it('should be off by default', done => {
                 setupVisitorSpy(false, done);
-                dumpDescribes(basicSuite, printer);
+                dumpDescribes(basicSuite, generator);
             });
 
             it('should be `false` when set', done => {
                 setupVisitorSpy(false, done);
-                dumpDescribes(basicSuite, printer, {verbose: false});
+                dumpDescribes(basicSuite, generator, {verbose: false});
             });
 
             it('should be `true` when set', done => {
                 setupVisitorSpy(true, done);
-                dumpDescribes(basicSuite, printer, {verbose: true});
+                dumpDescribes(basicSuite, generator, {verbose: true});
             });
         });
 

@@ -21,13 +21,13 @@
         });
     }
 
-    function makeTree(file, printer, options, isData) {
+    function makeTree(file, generator, options, isData) {
         if (!file) {
             throw new Error('[ERROR] No file given');
         }
 
-        if (!printer) {
-            throw new Error('[ERROR] No printer given');
+        if (!generator) {
+            throw new Error('[ERROR] No generator given');
         }
 
         options = options || {};
@@ -38,7 +38,7 @@
 
                 return !map.size ?
                     `No results found for suite ${file}` :
-                    printer.print(map, options.verbose);
+                    generator.print(map, options.verbose);
             });
     }
 

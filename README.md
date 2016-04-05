@@ -87,11 +87,11 @@ Let's get fancy and open a file from the internet in the default browser:
 
 * Note that the above pipeline is using `open` which is an OS X tool.
 
-## Creating a Custom Printer
+## Creating a Custom Code Generator
 
-**dump_describes** ships with two printers, [LOG] and [HTML].
+**dump_describes** ships with two generators, [LOG] and [HTML].
 
-However, it's very easy to create a printer. The only stipulation is that the printer module expose a `print` method, which is called with the node results and the value of `verbose`.
+However, it's very easy to create a generator. The only stipulation is that the generator module expose a `print` method, which is called with the node results and the value of `verbose`.
 
 `print` must return a Promise, which in turn will resolve with the list of transformed results or a simple message or something else, depending on the requirements.
 
@@ -125,6 +125,6 @@ Benjamin Toll
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
 [Mocha]: http://mochajs.org/
-[HTML]: /src/lib/printer/html.js
-[LOG]: /src/lib/printer/log.js
+[HTML]: /src/lib/generator/html.js
+[LOG]: /src/lib/generator/log.js
 

@@ -27,7 +27,7 @@ const logger = require('logger'),
     .argv,
 
     // Default to logging to stdout.
-    printer = require(`../src/lib/printer/${!argv.html ? 'log' : 'html'}`),
+    generator = require(`../src/lib/generator/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
     file = argv.file,
     info = logger.info,
@@ -53,12 +53,12 @@ if (!file) {
     });
 
     stdin.on('end', () => {
-        makeTree(buf, printer, options, true)
+        makeTree(buf, generator, options, true)
         .then(info)
         .catch(error);
     });
 } else {
-    makeTree(file, printer, options, false)
+    makeTree(file, generator, options, false)
     .then(info)
     .catch(error);
 }
