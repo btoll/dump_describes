@@ -1,6 +1,7 @@
 'use strict';
 
-const rows = [],
+const transformer = require('../transformer'),
+    rows = [],
     getTabs = indent => {
         const tabs = '';
 
@@ -21,7 +22,12 @@ module.exports = {
         // A Promise isn't strictly necessary here.
         return new Promise(resolve => {
             for (const entry of results.entries()) {
-                rows.push(`Test suite ${entry[0]}`);
+                let foo = entry[0].reduce((acc, curr) => {
+                    acc += transformer.getNodeValue(curr);
+                    return acc;
+                }, '');
+
+                rows.push(`Test suite ${foo}`);
                 this.makeNode(entry[1].map, verbose);
             }
 
@@ -45,7 +51,12 @@ module.exports = {
                 const entry1 = entry[1],
                     map = entry1.map;
 
-                getRow(entry[0], (verbose && !map ? entry1 : entry1.identifier));
+                let foo = entry[0].reduce((acc, curr) => {
+                    acc += transformer.getNodeValue(curr);
+                    return acc;
+                }, '');
+
+                getRow(foo, (verbose && !map ? entry1 : entry1.identifier));
 
                 if (map && map.size) {
                     this.makeNode(map, verbose);
