@@ -2,8 +2,8 @@
 
 describe('dump_describes', () => {
     const dumpDescribes = require('../src/index'),
-        generator = require('../src/lib/generator/log'),
-        visitor = require('../src/lib/visitor'),
+        generator = require('../src/generator/log'),
+        visitor = require('../src/visitor'),
         basicSuite = 'spec/test/basic_suite.js',
         transpiledSuite = 'spec/test/transpiled_suite.js',
         binaryExpressionString = "'foo' + bar",

@@ -125,6 +125,6 @@ Benjamin Toll
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
 [Mocha]: http://mochajs.org/
-[HTML]: /src/lib/generator/html.js
-[LOG]: /src/lib/generator/log.js
+[HTML]: /src/generator/html.js
+[LOG]: /src/generator/log.js
 
