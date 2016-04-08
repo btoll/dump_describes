@@ -1,4 +1,4 @@
-/* eslint-disable no-case-declarations,no-func-assign,one-var */
+/* eslint-disable no-case-declarations,one-var */
 'use strict';
 
 let needsPadding = new Set(['delete', 'instanceof', 'typeof']);

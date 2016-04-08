@@ -32,11 +32,15 @@ module.exports = {
 
     visit: function (node, results) {
         switch (node.type) {
+            case 'ArrowFunctionExpression':
+                node.body.body.forEach(body => this.visit(body, results));
+                break;
+
             case 'AssignmentExpression':
                 return [
-                    this.visit(node.left),
+                    this.visit(node.left, results),
                     node.operator,
-                    this.visit(node.right)
+                    this.visit(node.right, results)
                 ].join(' ');
 
             case 'BlockStatement':
@@ -48,7 +52,8 @@ module.exports = {
                 let args = node.arguments,
                     name = node.callee.name;
 
-                if (this.testDescribeBlock(name)) {
+                // Always capture the root node!
+                if (results.root && name === 'describe' || this.testDescribeBlock(name)) {
                     let block = {
                         identifier: name,
                         map: new Map()
