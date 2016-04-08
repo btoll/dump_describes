@@ -37,9 +37,7 @@ module.exports = {
                 value = [
                     this.getNodeValue(node.left),
                     node.operator,
-                    this.getNodeValue(node.right),
-                    // Right-pad.
-                    ' '
+                    this.getNodeValue(node.right)
                 ].join(' ');
                 break;
 
@@ -49,12 +47,14 @@ module.exports = {
 
             case 'ConditionalExpression':
                 value = [
+                    '(',
                     this.getNodeValue(node.test),
-                    '?',
+                    ' ? ',
                     this.getNodeValue(node.consequent),
-                    ':',
-                    this.getNodeValue(node.alternate)
-                ].join(' ');
+                    ' : ',
+                    this.getNodeValue(node.alternate),
+                    ')'
+                ].join('');
                 break;
 
             case 'Identifier':
@@ -113,9 +113,6 @@ module.exports = {
                         operator + this.getNodeValue(arg) :
                         this.getNodeValue(arg) + operator;
                 }
-
-                value = node.name;
-                break;
         }
 
         return value;
