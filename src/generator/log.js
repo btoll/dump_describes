@@ -22,12 +22,12 @@ module.exports = {
         // A Promise isn't strictly necessary here.
         return new Promise(resolve => {
             for (const entry of results.entries()) {
-                let foo = entry[0].reduce((acc, curr) => {
+                let suiteName = entry[0].reduce((acc, curr) => {
                     acc += transformer.getNodeValue(curr);
                     return acc;
                 }, '');
 
-                rows.push(`Test suite ${foo}`);
+                rows.push(`Test suite ${suiteName}`);
                 this.makeNode(entry[1].map, verbose);
             }
 
@@ -51,12 +51,12 @@ module.exports = {
                 const entry1 = entry[1],
                     map = entry1.map;
 
-                let foo = entry[0].reduce((acc, curr) => {
+                let expectation = entry[0].reduce((acc, curr) => {
                     acc += transformer.getNodeValue(curr);
                     return acc;
                 }, '');
 
-                getRow(foo, (verbose && !map ? entry1 : entry1.identifier));
+                getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
 
                 if (map && map.size) {
                     this.makeNode(map, verbose);

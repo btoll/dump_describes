@@ -1,5 +1,6 @@
 'use strict';
 
+const transformer = require('../transformer');
 let indent = 0;
 
 function makeTpl(header, suite) {
@@ -111,13 +112,17 @@ document.body.addEventListener('click', event => {
 module.exports = {
     print: function (results, verbose) {
         return new Promise((resolve, reject) => {
-            for (const m of results.entries()) {
-                const suiteName = m[0],
+            for (const entry of results.entries()) {
+                const suiteName = entry[0].reduce((acc, curr) => {
+                        acc += transformer.getNodeValue(curr);
+                        return acc;
+                    }, ''),
                     // Trim quotes from the begin and end of the suiteName.
                     newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html';
+
                 let tpl;
 
-                tpl = makeTpl(suiteName, this.makeNode(m[1].map, [], verbose));
+                tpl = makeTpl(suiteName, this.makeNode(entry[1].map, [], verbose));
 
                 require('fs').writeFile(newFile, tpl, 'utf8', err => {
                     if (err) {
@@ -152,11 +157,18 @@ module.exports = {
                     map = entry1.map,
                     leftPadding = !(indent < 2) ? 'padding-left: 50px;' : '';
 
+                let expectation = entry[0].reduce((acc, curr) => {
+                    acc += transformer.getNodeValue(curr);
+                    return acc;
+                }, '');
+
+                getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
+
                 if (map || !verbose) {
                     const child = [];
 
                     buf.push(`<div style="${leftPadding}">`);
-                    child.push(getRow(entry[0], entry1.identifier));
+                    child.push(getRow(expectation, entry1.identifier));
 
                     // Note that will send an enclosing DIV to wrap all the children for
                     // the collapse/expand behavior.
@@ -169,7 +181,7 @@ module.exports = {
                 } else {
                     buf.push(
                         `<div style="${leftPadding}">`,
-                        getRow.call(this, entry[0], entry1),
+                        getRow.call(this, expectation, entry1),
                         '</div>'
                     );
                 }
