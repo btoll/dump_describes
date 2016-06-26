@@ -5,10 +5,6 @@ const logger = require('logger'),
     argv = require('yargs')
     .usage('Usage: dump_describes [options]')
 
-    .alias('f', 'file')
-    .nargs('f', 1)
-    .describe('f', 'The suite to parse')
-
     .describe('active', 'List only active blocks (i.e., `fdescribe`, `fit`)')
     .boolean('active')
 
@@ -18,18 +14,22 @@ const logger = require('logger'),
     .describe('html', 'Creates an html document of the tree')
     .boolean('html')
 
-    .alias('v', 'verbose')
-    .boolean('v')
-    .describe('v', 'Dumps `it` blocks')
+    .describe('target', 'The target suite to parse')
+    .alias('target', 't')
+    .nargs('target', 1)
 
-    .help('h')
-    .alias('h', 'help')
+    .describe('verbose', 'Dumps `it` blocks')
+    .alias('verbose', 'v')
+    .boolean('verbose')
+
+    .help('help')
+    .alias('help', 'h')
     .argv,
 
     // Default to logging to stdout.
     generator = require(`../src/generator/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
-    file = argv.file,
+    target = argv.target,
     info = logger.info,
     error = logger.error,
     options = {
@@ -38,7 +38,7 @@ const logger = require('logger'),
         verbose: argv.verbose
     };
 
-if (!file) {
+if (!target) {
     const stdin = process.stdin;
     let buf = '';
 
@@ -58,7 +58,7 @@ if (!file) {
         .catch(error);
     });
 } else {
-    makeTree(file, generator, options, false)
+    makeTree(target, generator, options, false)
     .then(info)
     .catch(error);
 }

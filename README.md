@@ -38,40 +38,40 @@ The following identifiers are supported:
     ------------ | -------------
     --active | List only active blocks (i.e., `fdescribe`, `fit`)
     --inactive | List only inactive blocks (i.e., `xdescribe`, `xit`)
-    -f, --file | The suite to parse
     --html | Creates an html document of the tree
-    -v, --verbose | Also dumps `it` blocks
-    -h, --help | Show help
+    --target, -t | The target suite to parse
+    --verbose, -v | Also dumps `it` blocks
+    --help, -h | Show help
 
 ## Examples
 
 The following will dump the result of processing the `Filters.js` suite to `stdout`:
 
-    dump_describes -f Filters.js
+    dump_describes -t Filters.js
 
 Also, dump `it` blocks:
 
-    dump_describes -f Filters.js -v
+    dump_describes -t Filters.js -v
 
 Only dump the 'active' `fdescribe` blocks to `stdout`:
 
-    dump_describes -f Filters.js --active
+    dump_describes -t Filters.js --active
 
 Same as the previous, but in addition dump 'active' `fit` blocks to `stdout`:
 
-    dump_describes -f Filters.js --active
+    dump_describes -t Filters.js --active
 
 Only dump the 'inactive' `xdescribe` blocks to `stdout`:
 
-    dump_describes -f Filters.js --inactive
+    dump_describes -t Filters.js --inactive
 
 Same as the previous, but in addition dump 'inactive' `xit` blocks to `stdout`:
 
-    dump_describes -f Filters.js --inactive -v
+    dump_describes -t Filters.js --inactive -v
 
 Create an `html` document of the same tree produced by the previous command (`describe` nodes can be expanded/collapsed):
 
-    dump_describes -f Filters.js -v --html
+    dump_describes -t Filters.js -v --html
 
 Pipe:
 
@@ -79,7 +79,7 @@ Pipe:
 
     cat suite.js | dump_describes -v
 
-    dump_describes -f Filters.js | tee foo
+    dump_describes -t Filters.js | tee foo
 
 Let's get fancy and open a file from the internet in the default browser:
 
@@ -99,13 +99,13 @@ However, it's very easy to create a generator. The only stipulation is that the 
 
 I use the following command abbreviations to view a suite from within Vim.
 
-Typing `:dd` followed by a [[space]] will become `:!clear && dump_describes -f %`:
+Typing `:dd` followed by a [[space]] will become `:!clear && dump_describes -t %`:
 
-    autocmd FileType javascript cnoreabbrev <expr> dd getcmdtype() == ":" && getcmdline() == 'dd' ? '!clear && dump_describes -f %' : 'dd'
+    autocmd FileType javascript cnoreabbrev <expr> dd getcmdtype() == ":" && getcmdline() == 'dd' ? '!clear && dump_describes -t %' : 'dd'
 
-Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -f % -v`:
+Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -t % -v`:
 
-    autocmd FileType javascript cnoreabbrev <expr> ddv getcmdtype() == ":" && getcmdline() == 'ddv' ? '!clear && dump_describes -f % -v' : 'ddv'
+    autocmd FileType javascript cnoreabbrev <expr> ddv getcmdtype() == ":" && getcmdline() == 'ddv' ? '!clear && dump_describes -t % -v' : 'ddv'
 
 ## Screenshots
 
