@@ -50,7 +50,9 @@ function visitTree(suite, options) {
     visitor.inactive = !!options.inactive;
     visitor.verbose = !!options.verbose;
 
-    return visitor.visit(esprima.parse(suite), map);
+    return visitor.visit(esprima.parse(suite, {
+        sourceType: 'module'
+    }), map);
 }
 
 module.exports = makeTree;
