@@ -33,7 +33,11 @@ module.exports = {
     visit: function (node, results) {
         switch (node.type) {
             case 'ArrowFunctionExpression':
-                node.body.body.forEach(body => this.visit(body, results));
+                const bodies = node.body.body;
+
+                if (bodies && Array.isArray(bodies)) {
+                    bodies.forEach(body => this.visit(body, results));
+                }
                 break;
 
             case 'AssignmentExpression':
