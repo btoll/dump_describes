@@ -14,6 +14,10 @@ const logger = require('logger'),
     .describe('html', 'Creates an html document of the tree')
     .boolean('html')
 
+    .describe('markdown', 'Creates a markdown document of the tree')
+    .alias('markdown', 'md')
+    .boolean('markdown')
+
     .describe('target', 'The target suite to parse')
     .alias('target', 't')
     .nargs('target', 1)
@@ -26,8 +30,6 @@ const logger = require('logger'),
     .alias('help', 'h')
     .argv,
 
-    // Default to logging to stdout.
-    generator = require(`../src/generator/${!argv.html ? 'log' : 'html'}`),
     makeTree = require('../src/index'),
     target = argv.target,
     info = logger.info,
@@ -37,6 +39,15 @@ const logger = require('logger'),
         inactive: argv.inactive,
         verbose: argv.verbose
     };
+
+let generator = null;
+if (argv.html) {
+    generator = require('../src/generator/html');
+} else if (argv.markdown) {
+    generator = require('../src/generator/markdown');
+} else {
+    generator = require('../src/generator/log');
+}
 
 if (!target) {
     const stdin = process.stdin;

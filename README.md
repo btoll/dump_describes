@@ -39,6 +39,7 @@ The following identifiers are supported:
     --active | List only active blocks (i.e., `fdescribe`, `fit`)
     --inactive | List only inactive blocks (i.e., `xdescribe`, `xit`)
     --html | Creates an html document of the tree
+    --markdown, --md | Creates a markdown document of the tree
     --target, -t | The target suite to parse
     --verbose, -v | Also dumps `it` blocks
     --help, -h | Show help
@@ -73,6 +74,10 @@ Create an `html` document of the same tree produced by the previous command (`de
 
     dump_describes -t Filters.js -v --html
 
+Create an `markdown` document of the same tree produced by the previous command (`describe` nodes can be expanded/collapsed):
+
+    dump_describes -t Filters.js -v --md
+
 Pipe:
 
     coffee -p suite.coffee | dump_describes -v --html
@@ -89,7 +94,7 @@ Let's get fancy and open a file from the internet in the default browser:
 
 ## Creating a Custom Code Generator
 
-**dump_describes** ships with two generators, [LOG] and [HTML].
+**dump_describes** ships with three generators, [LOG], [HTML] and [MARKDOWN].
 
 However, it's very easy to create a generator. The only stipulation is that the generator module expose a `print` method, which is called with the node results and the value of `verbose`.
 
@@ -127,4 +132,5 @@ Benjamin Toll
 [Mocha]: http://mochajs.org/
 [HTML]: /src/generator/html.js
 [LOG]: /src/generator/log.js
+[MARKDOWN]: /src/generator/markdown.js
 
