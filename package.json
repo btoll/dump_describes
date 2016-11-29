@@ -12,7 +12,8 @@
     "coverage": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine --captureExceptions",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "lint": "eslint bin spec src",
-    "specs": "JASMINE_CONFIG_PATH=jasmine.json jasmine",
+    "specs": "JASMINE_CONFIG_PATH=jasmine.json jasmine && npm run suites",
+    "suites": "cd spec && ../bin/dump_describes -t dump_describes_spec.js -v --html && ../bin/dump_describes -t dump_describes_spec.js -v --md && cd ..",
     "test": "npm run clean && npm run lint && npm run compile && npm run specs",
     "watch": "bash ./scripts/watch.bash"
   },

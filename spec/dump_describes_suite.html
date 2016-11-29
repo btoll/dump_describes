@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    background: #726d6d;
+    border: 0px solid #000;
+    border-top-width: 2px;
+    color: #fff;
+    font-weight: normal;
+    padding: 10px 10px 10px 20px;
+}
+
+div > p {
+    padding: 10px;
+}
+
+p.stripe {
+    background: #ddd;
+    border: 0px solid #000;
+    border-top-width: 2px;
+}
+
+span {
+    color: #888;
+}
+
+span.it {
+    color: #eab560;
+}
+
+span.describe {
+    color: #207ab2;
+    margin-right: 5px;
+}
+
+span + span {
+    color: #000;
+    font-weight: bold;
+}
+
+span.fdescribe + span,
+span.xdescribe + span {
+    color: green;
+}
+
+span.fit + span,
+span.xit + span {
+    color: green;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    color: #207ab2;
+}
+
+span.fdescribe a:link,
+span.fdescribe a:visited,
+span.fdescribe a:hover,
+span.fdescribe a:active,
+
+span.xdescribe a:link,
+span.xdescribe a:visited,
+span.xdescribe a:hover,
+span.xdescribe a:active {
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+<h3>Test suite 'dump_describes'</h3>
+<div style=""><p class="stripe">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'making a suite'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should return a promise'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should throw if not given a file'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should throw if not given a generator'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'when given input'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'bad input'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should throw if given a non-existent file'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should throw if given bad input'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'good input'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should succeed when given an existing file'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should succeed when given good input'</span>
+            </p></div></div></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'no-ops'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should not return any results when given invalid code'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should not return any results when given code with errors'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should not return any results when given invalid input'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should not return any results when given input with errors'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'verbose'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should be off by default'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should be `false` when set'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should be `true` when set'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'when part of return statements'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'describe blocks'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should work when returned from a block (file)'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should work when returned from a block (input)'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'it blocks'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should work when returned from a block (file)'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should work when returned from a block (input)'</span>
+            </p></div></div></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'suite and spec titles'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'describe blocks'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'BinaryExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="xdescribe">
+                    (<a href="#">xdescribe</a>)
+                </span>
+                <span>'CallExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'ConditionalExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'MemberExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'TemplateLiteral'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'UnaryExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div></div></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'it blocks'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'BinaryExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="xdescribe">
+                    (<a href="#">xdescribe</a>)
+                </span>
+                <span>'CallExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'ConditionalExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'MemberExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'TemplateLiteral'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div><div style="padding-left: 50px;"><p class="">
+                <span class="describe">
+                    (<a href="#">describe</a>)
+                </span>
+                <span>'UnaryExpression'</span>
+            </p><div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have file support'</span>
+            </p></div><div style="padding-left: 50px;"><p class="">
+                <span class="it">
+                    it -> 
+                </span>
+                <span>'should have input support'</span>
+            </p></div></div></div></div></div></div></div></div></div>
+
+<script>
+'use strict';
+
+document.body.addEventListener('click', event => {
+    const target = event.target;
+
+    if (target.tagName.toUpperCase() === 'A') {
+        const style = target.parentNode.parentNode.nextElementSibling.style;
+
+        style.display = (style.display === 'none') ?
+            'block' :
+            'none';
+    }
+
+    event.preventDefault();
+});
+</script>
+</body>
+</html>
+    
