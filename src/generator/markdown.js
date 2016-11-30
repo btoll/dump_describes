@@ -49,7 +49,12 @@ module.exports = {
                 `\n###(${type})` :
                 `${type} ->`;
 
-            rows.push(`${getTabs(indent)} ${t} ${name}`);
+            rows.push(
+                // Target top-level `it` blocks (make an unordered list).
+                (indent === 1 && ~type.indexOf('it')) ?
+                    `- ${t} ${name}` :
+                    `${getTabs(indent)} ${t} ${name}`
+            );
         }
 
         return function (map, verbose) {

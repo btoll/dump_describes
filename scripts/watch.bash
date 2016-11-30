@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 if which entr > /dev/null; then
     shopt -s globstar
