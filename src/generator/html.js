@@ -110,19 +110,20 @@ document.body.addEventListener('click', event => {
 }
 
 module.exports = {
-    print: function (results, verbose) {
+    print: function (results, options) {
         return new Promise((resolve, reject) => {
             for (const entry of results.entries()) {
                 const suiteName = entry[0].reduce((acc, curr) => {
                         acc += transformer.getNodeValue(curr);
                         return acc;
-                    }, ''),
-                    // Trim quotes from the begin and end of the suiteName.
-                    newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.html';
+                    }, '');
+
+                // Trim quotes from the begin and end of the suiteName.
+                const newFile = `${options.destination}/${suiteName.replace(/^['"]|['"]$/g, '')}_suite.html`;
 
                 let tpl;
 
-                tpl = makeTpl(suiteName, this.makeNode(entry[1].map, [], verbose));
+                tpl = makeTpl(suiteName, this.makeNode(entry[1].map, [], options.verbose));
 
                 require('fs').writeFile(newFile, tpl, 'utf8', err => {
                     if (err) {

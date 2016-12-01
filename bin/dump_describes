@@ -11,6 +11,10 @@ const logger = require('logger'),
     .describe('inactive', 'List only inactive blocks (i.e., `xdescribe`, `xit`)')
     .boolean('inactive')
 
+    .describe('destination', '[Optional] The location to save the output (defaults to $PWD)')
+    .alias('destination', 'd')
+    .nargs('target', 1)
+
     .describe('html', 'Creates an html document of the tree')
     .boolean('html')
 
@@ -36,6 +40,7 @@ const logger = require('logger'),
     error = logger.error,
     options = {
         active: argv.active,
+        destination: argv.destination || '.',
         inactive: argv.inactive,
         verbose: argv.verbose
     };

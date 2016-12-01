@@ -15,7 +15,7 @@ const getTabs = indent => {
 let indent = 0;
 
 module.exports = {
-    print: function (results, verbose) {
+    print: function (results, options) {
         // Usually not needed to reset `rows` list except when running tests.
         rows.length = 0;
 
@@ -26,11 +26,12 @@ module.exports = {
                     acc += transformer.getNodeValue(curr);
                     return acc;
                 }, '');
+
                 // Trim quotes from the begin and end of the suiteName.
-                const newFile = suiteName.replace(/^['"]|['"]$/g, '') + '_suite.md';
+                const newFile = `${options.destination}/${suiteName.replace(/^['"]|['"]$/g, '')}_suite.md`;
 
                 rows.push(`##Test suite ${suiteName}`);
-                this.makeNode(entry[1].map, verbose);
+                this.makeNode(entry[1].map, options.verbose);
 
                 require('fs').writeFile(newFile, rows.join('\n'), 'utf8', err => {
                     if (err) {

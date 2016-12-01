@@ -38,6 +38,7 @@ The following identifiers are supported:
     ------------ | -------------
     --active | List only active blocks (i.e., `fdescribe`, `fit`)
     --inactive | List only inactive blocks (i.e., `xdescribe`, `xit`)
+    --destination, -d | [Optional] The location to save the output (defaults to $PWD)
     --html | Creates an html document of the tree
     --markdown, --md | Creates a markdown document of the tree
     --target, -t | The target suite to parse

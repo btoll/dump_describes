@@ -37,7 +37,7 @@ function makeTree(file, generator, options, isData) {
 
             return !map.size ?
                 `No results found for suite ${file}` :
-                generator.print(map, options.verbose);
+                generator.print(map, options);
         });
 }
 

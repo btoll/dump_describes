@@ -15,7 +15,7 @@ const transformer = require('../transformer'),
 let indent = 0;
 
 module.exports = {
-    print: function (results, verbose) {
+    print: function (results, options) {
         // Usually not needed to reset `rows` list except when running tests.
         rows.length = 0;
 
@@ -28,7 +28,7 @@ module.exports = {
                 }, '');
 
                 rows.push(`Test suite ${suiteName}`);
-                this.makeNode(entry[1].map, verbose);
+                this.makeNode(entry[1].map, options.verbose);
             }
 
             resolve(rows.join('\n'));
