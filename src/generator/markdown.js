@@ -46,16 +46,20 @@ module.exports = {
 
     makeNode: (() => {
         function getRow(name, type) {
-            const t = ~type.indexOf('describe') ?
-                `\n###(${type})` :
-                `${type} ->`;
-
-            rows.push(
-                // Target top-level `it` blocks (make an unordered list).
-                (indent === 1 && ~type.indexOf('it')) ?
-                    `- ${t} ${name}` :
-                    `${getTabs(indent)} ${t} ${name}`
-            );
+            if (~type.indexOf('describe')) {
+                rows.push(
+                    (indent === 1) ?
+                        `\n###(describe) ${name}` :
+                        `\n${getTabs(indent)}(describe) ${name}`
+                );
+            } else {
+                rows.push(
+                    (indent === 1) ?
+                        // Target top-level `it` blocks (make an unordered list).
+                        `- it -> ${name}` :
+                        `${getTabs(indent)} it -> ${name}`
+                );
+            }
         }
 
         return function (map, verbose) {
