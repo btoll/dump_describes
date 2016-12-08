@@ -4,15 +4,12 @@ const dumpDescribes = require('../src/index');
 const generator = require('../src/generator/log');
 const visitor = require('../src/visitor');
 
+const testStrings = require('./test/strings');
+const testSuites = require('./test/suites');
+
 describe('dump_describes', () => {
     const basicSuite = 'spec/test/basic_suite.js';
     const transpiledSuite = 'spec/test/transpiled_suite.js';
-    const binaryExpressionString = "'foo' + bar";
-    const callExpressionString = "quux() + 'baz ' + foo('derp').bar()";
-    const conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'";
-    const memberExpressionString = "'baz' + foo.bar + foo['quux']";
-    const templateLiteralString = '`baz ${foo.bar}`';
-    const unaryExpressionString = "typeof ''";
 
     let mock;
 
@@ -161,145 +158,157 @@ describe('dump_describes', () => {
 
         describe('suite and spec titles', () => {
             describe('describe blocks', () => {
-                const binaryExpressionSuite = "describe('foo' + bar, () => {});";
-                const callExpressionSuite = "describe(quux() + 'baz ' + foo('derp').bar(), () => {});";
-                const conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});";
-                const memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});";
-                const templateLiteralSuite = 'describe(`baz ${foo.bar}`, () => {});';
-                const unaryExpressionSuite = "describe(typeof '', () => {});";
                 const options = {
                     verbose: false
                 };
 
                 describe('BinaryExpression', () => {
+                    const binaryExpressionString = testStrings.binaryExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, binaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(binaryExpressionSuite, binaryExpressionString, options, true, done);
+                        doHaystackTest(testSuites.describe.binaryExpression, binaryExpressionString, options, true, done);
                     });
                 });
 
                 xdescribe('CallExpression', () => {
+                    const callExpressionString = testStrings.callExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, callExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(callExpressionSuite, callExpressionString, options, true, done);
+                        doHaystackTest(testSuites.describe.callExpression, callExpressionString, options, true, done);
                     });
                 });
 
                 describe('ConditionalExpression', () => {
+                    const conditionalExpressionString = testStrings.conditionalExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, conditionalExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(conditionalExpressionSuite, conditionalExpressionString, options, true, done);
+                        doHaystackTest(testSuites.describe.conditionalExpression, conditionalExpressionString, options, true, done);
                     });
                 });
 
                 describe('MemberExpression', () => {
+                    const memberExpressionString = testStrings.memberExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, memberExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(memberExpressionSuite, memberExpressionString, options, true, done);
+                        doHaystackTest(testSuites.describe.memberExpression, memberExpressionString, options, true, done);
                     });
                 });
 
                 describe('TemplateLiteral', () => {
+                    const templateLiteralString = testStrings.templateLiteral;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, templateLiteralString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(templateLiteralSuite, templateLiteralString, options, true, done);
+                        doHaystackTest(testSuites.describe.templateLiteral, templateLiteralString, options, true, done);
                     });
                 });
 
                 describe('UnaryExpression', () => {
+                    const unaryExpressionString = testStrings.unaryExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, unaryExpressionString, options, false, done);
                     });
 
                     it('should have file support', done => {
-                        doHaystackTest(unaryExpressionSuite, unaryExpressionString, options, true, done);
+                        doHaystackTest(testSuites.describe.unaryExpression, unaryExpressionString, options, true, done);
                     });
                 });
             });
 
             describe('it blocks', () => {
-                const binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});";
-                const callExpressionSuite = "describe('test', () => { it(quux() + 'baz ' + foo('derp').bar(), () => {});});";
-                const conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});";
-                const memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});";
-                const templateLiteralSuite = "describe('test', () => { it(`baz ${foo.bar}`, () => {});});";
-                const unaryExpressionSuite = "describe('test', () => { it(typeof '', () => {});});";
                 const options = {
                     verbose: true
                 };
 
                 describe('BinaryExpression', () => {
+                    const binaryExpressionString = testStrings.binaryExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, binaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(binaryExpressionSuite, binaryExpressionString, options, true, done);
+                        doHaystackTest(testSuites.it.binaryExpression, binaryExpressionString, options, true, done);
                     });
                 });
 
                 xdescribe('CallExpression', () => {
+                    const callExpressionString = testStrings.callExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, callExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(callExpressionSuite, callExpressionString, options, true, done);
+                        doHaystackTest(testSuites.it.callExpression, callExpressionString, options, true, done);
                     });
                 });
 
                 describe('ConditionalExpression', () => {
+                    const conditionalExpressionString = testStrings.conditionalExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, conditionalExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(conditionalExpressionSuite, conditionalExpressionString, options, true, done);
+                        doHaystackTest(testSuites.it.conditionalExpression, conditionalExpressionString, options, true, done);
                     });
                 });
 
                 describe('MemberExpression', () => {
+                    const memberExpressionString = testStrings.memberExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, memberExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(memberExpressionSuite, memberExpressionString, options, true, done);
+                        doHaystackTest(testSuites.it.memberExpression, memberExpressionString, options, true, done);
                     });
                 });
 
                 describe('TemplateLiteral', () => {
+                    const templateLiteralString = testStrings.templateLiteral;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, templateLiteralString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(templateLiteralSuite, templateLiteralString, options, true, done);
+                        doHaystackTest(testSuites.it.templateLiteral, templateLiteralString, options, true, done);
                     });
                 });
 
                 describe('UnaryExpression', () => {
+                    const unaryExpressionString = testStrings.unaryExpression;
+
                     it('should have file support', done => {
                         doHaystackTest(basicSuite, unaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
-                        doHaystackTest(unaryExpressionSuite, unaryExpressionString, options, true, done);
+                        doHaystackTest(testSuites.it.unaryExpression, unaryExpressionString, options, true, done);
                     });
                 });
             });
