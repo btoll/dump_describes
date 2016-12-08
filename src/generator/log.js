@@ -1,16 +1,17 @@
 'use strict';
 
-const transformer = require('../transformer'),
-    rows = [],
-    getTabs = indent => {
-        const tabs = '';
+const transformer = require('../transformer');
+const rows = [];
+// TODO: Fix this funkiness!
+const getTabs = indent => {
+    const tabs = '';
 
-        while (indent) {
-            return `${getTabs(--indent)} \t`;
-        }
+    while (indent) {
+        return `${getTabs(--indent)} \t`;
+    }
 
-        return tabs;
-    };
+    return tabs;
+};
 
 let indent = 0;
 

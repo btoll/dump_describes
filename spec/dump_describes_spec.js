@@ -1,17 +1,18 @@
 'use strict';
 
+const dumpDescribes = require('../src/index');
+const generator = require('../src/generator/log');
+const visitor = require('../src/visitor');
+
 describe('dump_describes', () => {
-    const dumpDescribes = require('../src/index'),
-        generator = require('../src/generator/log'),
-        visitor = require('../src/visitor'),
-        basicSuite = 'spec/test/basic_suite.js',
-        transpiledSuite = 'spec/test/transpiled_suite.js',
-        binaryExpressionString = "'foo' + bar",
-        callExpressionString = "quux() + 'baz ' + foo('derp').bar()",
-        conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'",
-        memberExpressionString = "'baz' + foo.bar + foo['quux']",
-        templateLiteralString = '`baz ${foo.bar}`',
-        unaryExpressionString = "typeof ''";
+    const basicSuite = 'spec/test/basic_suite.js';
+    const transpiledSuite = 'spec/test/transpiled_suite.js';
+    const binaryExpressionString = "'foo' + bar";
+    const callExpressionString = "quux() + 'baz ' + foo('derp').bar()";
+    const conditionalExpressionString = "2 + 2 === 4 ? 'world' : 'Big Brother'";
+    const memberExpressionString = "'baz' + foo.bar + foo['quux']";
+    const templateLiteralString = '`baz ${foo.bar}`';
+    const unaryExpressionString = "typeof ''";
 
     let mock;
 
@@ -84,10 +85,10 @@ describe('dump_describes', () => {
         });
 
         describe('no-ops', () => {
-            const needle = 'No results found',
-                options = {
-                    verbose: false
-                };
+            const needle = 'No results found';
+            const options = {
+                verbose: false
+            };
 
             it('should not return any results when given invalid code', done => {
                 doHaystackTest('spec/test/bad_suite.js', needle, options, false, done);
@@ -128,10 +129,10 @@ describe('dump_describes', () => {
             const suite = "(() => { return describe('transpiled', () => { describe('when foo', () => { it('should derp', () => { expect(2 + 2).toBe(4); }); }); return describe('when bar', () => { it('should herp', () => { expect([1, 2, 4].length).toBe(3); }); return it('should double derp', () => { expect({}).not.toBe({}); }); }); }); });";
 
             describe('describe blocks', () => {
-                const needle = 'when foo',
-                    options = {
-                        verbose: false
-                    };
+                const needle = 'when foo';
+                const options = {
+                    verbose: false
+                };
 
                 it('should work when returned from a block (file)', done => {
                     doHaystackTest(transpiledSuite, needle, options, false, done);
@@ -143,10 +144,10 @@ describe('dump_describes', () => {
             });
 
             describe('it blocks', () => {
-                const needle = 'should double derp',
-                    options = {
-                        verbose: true
-                    };
+                const needle = 'should double derp';
+                const options = {
+                    verbose: true
+                };
 
                 it('should work when returned from a block (file)', done => {
                     doHaystackTest(transpiledSuite, needle, options, false, done);
@@ -160,15 +161,15 @@ describe('dump_describes', () => {
 
         describe('suite and spec titles', () => {
             describe('describe blocks', () => {
-                const binaryExpressionSuite = "describe('foo' + bar, () => {});",
-                    callExpressionSuite = "describe(quux() + 'baz ' + foo('derp').bar(), () => {});",
-                    conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});",
-                    memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});",
-                    templateLiteralSuite = 'describe(`baz ${foo.bar}`, () => {});',
-                    unaryExpressionSuite = "describe(typeof '', () => {});",
-                    options = {
-                        verbose: false
-                    };
+                const binaryExpressionSuite = "describe('foo' + bar, () => {});";
+                const callExpressionSuite = "describe(quux() + 'baz ' + foo('derp').bar(), () => {});";
+                const conditionalExpressionSuite = "describe('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});";
+                const memberExpressionSuite = "describe('baz' + foo.bar + foo['quux'], () => {});";
+                const templateLiteralSuite = 'describe(`baz ${foo.bar}`, () => {});';
+                const unaryExpressionSuite = "describe(typeof '', () => {});";
+                const options = {
+                    verbose: false
+                };
 
                 describe('BinaryExpression', () => {
                     it('should have file support', done => {
@@ -232,15 +233,15 @@ describe('dump_describes', () => {
             });
 
             describe('it blocks', () => {
-                const binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});",
-                    callExpressionSuite = "describe('test', () => { it(quux() + 'baz ' + foo('derp').bar(), () => {});});",
-                    conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});",
-                    memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});",
-                    templateLiteralSuite = "describe('test', () => { it(`baz ${foo.bar}`, () => {});});",
-                    unaryExpressionSuite = "describe('test', () => { it(typeof '', () => {});});",
-                    options = {
-                        verbose: true
-                    };
+                const binaryExpressionSuite = "describe('test', () => { it('foo' + bar, () => {});});";
+                const callExpressionSuite = "describe('test', () => { it(quux() + 'baz ' + foo('derp').bar(), () => {});});";
+                const conditionalExpressionSuite = "describe('test', () => { it('hello ' + (2 + 2 === 4 ? 'world' : 'Big Brother'), () => {});});";
+                const memberExpressionSuite = "describe('test', () => { it('baz' + foo.bar + foo['quux'], () => {});});";
+                const templateLiteralSuite = "describe('test', () => { it(`baz ${foo.bar}`, () => {});});";
+                const unaryExpressionSuite = "describe('test', () => { it(typeof '', () => {});});";
+                const options = {
+                    verbose: true
+                };
 
                 describe('BinaryExpression', () => {
                     it('should have file support', done => {

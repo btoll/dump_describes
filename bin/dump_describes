@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-const logger = require('logger'),
-    argv = require('yargs')
+const logger = require('logger');
+const argv = require('yargs')
     .usage('Usage: dump_describes [options]')
 
     .describe('active', 'List only active blocks (i.e., `fdescribe`, `fit`)')
@@ -32,18 +32,18 @@ const logger = require('logger'),
 
     .help('help')
     .alias('help', 'h')
-    .argv,
+    .argv;
 
-    makeTree = require('../src/index'),
-    target = argv.target,
-    info = logger.info,
-    error = logger.error,
-    options = {
-        active: argv.active,
-        destination: argv.destination || '.',
-        inactive: argv.inactive,
-        verbose: argv.verbose
-    };
+const makeTree = require('../src/index');
+const target = argv.target;
+const info = logger.info;
+const error = logger.error;
+const options = {
+    active: argv.active,
+    destination: argv.destination || '.',
+    inactive: argv.inactive,
+    verbose: argv.verbose
+};
 
 let generator = null;
 if (argv.html) {

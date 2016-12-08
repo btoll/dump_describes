@@ -1,8 +1,8 @@
 'use strict';
 
-const esprima = require('esprima'),
-    visitor = require('./visitor'),
-    fs = require('fs');
+const esprima = require('esprima');
+const visitor = require('./visitor');
+const fs = require('fs');
 
 function getSuite(file, isData) {
     return new Promise((resolve, reject) => {

@@ -1,12 +1,12 @@
 /* eslint-disable no-case-declarations */
 'use strict';
 
-const reDescribe = /^[f|x]?describe/,
-    reFDescribe = /^fdescribe/,
-    reXDescribe = /^xdescribe/,
-    reIt = /^[f|x]?it/,
-    reFIt = /^fit/,
-    reXIt = /^xit/;
+const reDescribe = /^[f|x]?describe/;
+const reFDescribe = /^fdescribe/;
+const reXDescribe = /^xdescribe/;
+const reIt = /^[f|x]?it/;
+const reFIt = /^fit/;
+const reXIt = /^xit/;
 
 module.exports = {
     // TODO: Fold test methods into one.
