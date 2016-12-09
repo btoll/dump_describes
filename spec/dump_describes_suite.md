@@ -40,6 +40,14 @@
 
 		(describe) 'describe blocks'
 
+			(describe) 'ArrowFunctionExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
+			(describe) 'AssignmentExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
 			(describe) 'BinaryExpression'
 				 it -> 'should have file support'
 				 it -> 'should have input support'
@@ -49,6 +57,10 @@
 				 it -> 'should have input support'
 
 			(describe) 'ConditionalExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
+			(describe) 'FunctionExpression'
 				 it -> 'should have file support'
 				 it -> 'should have input support'
 
@@ -66,6 +78,14 @@
 
 		(describe) 'it blocks'
 
+			(describe) 'ArrowFunctionExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
+			(describe) 'AssignmentExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
 			(describe) 'BinaryExpression'
 				 it -> 'should have file support'
 				 it -> 'should have input support'
@@ -75,6 +95,10 @@
 				 it -> 'should have input support'
 
 			(describe) 'ConditionalExpression'
+				 it -> 'should have file support'
+				 it -> 'should have input support'
+
+			(describe) 'FunctionExpression'
 				 it -> 'should have file support'
 				 it -> 'should have input support'
 

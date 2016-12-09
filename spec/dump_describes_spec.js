@@ -162,6 +162,30 @@ describe('dump_describes', () => {
                     verbose: false
                 };
 
+                describe('ArrowFunctionExpression', () => {
+                    const arrowFunctionExpressionString = testStrings.arrowFunctionExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, arrowFunctionExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.describe.arrowFunctionExpression, arrowFunctionExpressionString, options, true, done);
+                    });
+                });
+
+                describe('AssignmentExpression', () => {
+                    const assignmentExpressionString = testStrings.assignmentExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, assignmentExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.describe.assignmentExpression, assignmentExpressionString, options, true, done);
+                    });
+                });
+
                 describe('BinaryExpression', () => {
                     const binaryExpressionString = testStrings.binaryExpression;
 
@@ -195,6 +219,18 @@ describe('dump_describes', () => {
 
                     it('should have input support', done => {
                         doHaystackTest(testSuites.describe.conditionalExpression, conditionalExpressionString, options, true, done);
+                    });
+                });
+
+                describe('FunctionExpression', () => {
+                    const functionExpressionString = testStrings.functionExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, functionExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.describe.functionExpression, functionExpressionString, options, true, done);
                     });
                 });
 
@@ -240,6 +276,30 @@ describe('dump_describes', () => {
                     verbose: true
                 };
 
+                describe('ArrowFunctionExpression', () => {
+                    const arrowFunctionExpressionString = testStrings.arrowFunctionExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, arrowFunctionExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.it.arrowFunctionExpression, arrowFunctionExpressionString, options, true, done);
+                    });
+                });
+
+                describe('AssignmentExpression', () => {
+                    const assignmentExpressionString = testStrings.assignmentExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, assignmentExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.it.assignmentExpression, assignmentExpressionString, options, true, done);
+                    });
+                });
+
                 describe('BinaryExpression', () => {
                     const binaryExpressionString = testStrings.binaryExpression;
 
@@ -273,6 +333,18 @@ describe('dump_describes', () => {
 
                     it('should have input support', done => {
                         doHaystackTest(testSuites.it.conditionalExpression, conditionalExpressionString, options, true, done);
+                    });
+                });
+
+                describe('FunctionExpression', () => {
+                    const functionExpressionString = testStrings.functionExpression;
+
+                    it('should have file support', done => {
+                        doHaystackTest(basicSuiteName, functionExpressionString, options, false, done);
+                    });
+
+                    it('should have input support', done => {
+                        doHaystackTest(testSuites.it.functionExpression, functionExpressionString, options, true, done);
                     });
                 });
 

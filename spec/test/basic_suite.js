@@ -1,12 +1,29 @@
-/* eslint-disable no-constant-condition */
+/* eslint-disable brace-style, no-constant-condition, no-unused-vars */
 'use strict';
 
 describe('test', () => {
     const foo = {};
     const quux = () => {};
     let bar;
+    let baz;
 
     describe('foo', () => {
+        describe(baz = bar, () =>
+            it('should ' + (baz = bar), () => {})
+        );
+
+        describe(baz = function () {}, () =>
+            it('should ' + function () {}, () => {})
+        );
+
+        describe(function () {}, () =>
+            it(function () {}, () => {})
+        );
+
+        describe(() => { const x = 5; }, () =>
+            it(() => {}, () => {})
+        );
+
         describe('foo' + bar, () =>
             it('should foo' + bar, () => {})
         );

@@ -31,6 +31,11 @@ module.exports = {
         let value;
 
         switch (node.type) {
+            // Temporary (limited) support.
+            case 'ArrowFunctionExpression':
+                value = '() => {}';
+                break;
+
             case 'AssignmentExpression':
             case 'BinaryExpression':
                 value = [
@@ -54,6 +59,11 @@ module.exports = {
                     this.getNodeValue(node.alternate),
                     ')'
                 ].join('');
+                break;
+
+            // Temporary (limited) support.
+            case 'FunctionExpression':
+                value = 'function () {}';
                 break;
 
             case 'Identifier':
@@ -104,7 +114,7 @@ module.exports = {
                 let operator = node.operator;
 
                 if (needsPadding.has(operator)) {
-                    operator = ' ' + operator + ' ';
+                    operator = ` ${operator} `;
                 }
 
                 while (arg) {

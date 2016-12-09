@@ -9,13 +9,14 @@ const reFIt = /^fit/;
 const reXIt = /^xit/;
 
 module.exports = {
-    // TODO: Fold test methods into one.
+    // TODO: Fold test methods into one?
     testDescribeBlock: function (name) {
         const re = this.active ? reFDescribe :
             this.inactive ? reXDescribe :
             reDescribe;
 
-        this.testDescribeBlock = (name) => re.test(name);
+        // Memoize.
+        this.testDescribeBlock = name => re.test(name);
 
         return this.testDescribeBlock(name);
     },
@@ -25,6 +26,7 @@ module.exports = {
             this.inactive ? reXIt :
             reIt;
 
+        // Memoize.
         this.testItBlock = name => re.test(name);
 
         return this.testItBlock(name);
@@ -33,6 +35,7 @@ module.exports = {
     visit: function (node, results) {
         switch (node.type) {
             case 'ArrowFunctionExpression':
+            case 'FunctionExpression':
                 const bodies = node.body.body;
 
                 if (bodies && Array.isArray(bodies)) {
@@ -40,12 +43,12 @@ module.exports = {
                 }
                 break;
 
-            case 'AssignmentExpression':
-                return [
-                    this.visit(node.left, results),
-                    node.operator,
-                    this.visit(node.right, results)
-                ].join(' ');
+//             case 'AssignmentExpression':
+//                 return [
+//                     this.visit(node.left, results),
+//                     node.operator,
+//                     this.visit(node.right, results)
+//                 ].join(' ');
 
             case 'BlockStatement':
                 node.body.forEach(node => this.visit(node, results));
@@ -57,7 +60,9 @@ module.exports = {
                 const name = node.callee.name;
 
                 // Always capture the root node!
-                if (results.root && name === 'describe' || this.testDescribeBlock(name)) {
+//                 if (results.root && name === 'describe' || this.testDescribeBlock(name)) {
+                // Check to see if `results.root` is no longer needed!
+                if (this.testDescribeBlock(name)) {
                     let block = {
                         identifier: name,
                         map: new Map()
@@ -75,10 +80,6 @@ module.exports = {
 
             case 'ExpressionStatement':
                 this.visit(node.expression, results);
-                break;
-
-            case 'FunctionExpression':
-                this.visit(node.body, results);
                 break;
 
             case 'MemberExpression':
