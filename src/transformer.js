@@ -4,15 +4,14 @@
 let needsPadding = new Set(['delete', 'instanceof', 'typeof']);
 const functionExpressionTypes = new Set(['ArrowFunctionExpression', 'FunctionExpression']);
 
-function isFunctionExpressionType(type) {
-    return functionExpressionTypes.has(type);
-}
+const isFunctionExpressionType =type =>
+    functionExpressionTypes.has(type);
 
 function parseArguments(args) {
-    // We're always parsing arguments from a MemberExpression here so it's necessary
+    // We're always parsing arguments from a CallExpression or MemberExpression here so it's necessary
     // to enclose them in parens.
-    const parsed = args.map((arg) => this.getNodeValue(this, arg)).join(', '),
-        arr = [parsed];
+    const parsed = args.map(arg => this.getNodeValue(arg)).join(', ');
+    const arr = [parsed];
 
     if (args.length) {
         if (!isFunctionExpressionType(args[0].type)) {
@@ -100,9 +99,9 @@ module.exports = {
                 break;
 
             case 'UnaryExpression':
-                let arg = node.argument,
-                    // Pad the operator in cases where it's `delete`, `typeof`, etc.
-                    operator = node.operator;
+                const arg = node.argument;
+                // Pad the operator in cases where it's `delete`, `typeof`, etc.
+                let operator = node.operator;
 
                 if (needsPadding.has(operator)) {
                     operator = ' ' + operator + ' ';

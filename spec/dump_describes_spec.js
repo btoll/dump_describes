@@ -8,8 +8,8 @@ const testStrings = require('./test/strings');
 const testSuites = require('./test/suites');
 
 describe('dump_describes', () => {
-    const basicSuite = 'spec/test/basic_suite.js';
-    const transpiledSuite = 'spec/test/transpiled_suite.js';
+    const basicSuiteName = 'spec/test/basic_suite.js';
+    const transpiledSuiteName = 'spec/test/transpiled_suite.js';
 
     let mock;
 
@@ -51,7 +51,7 @@ describe('dump_describes', () => {
 
         it('should throw if not given a generator', () => {
             expect(() => {
-                dumpDescribes(basicSuite);
+                dumpDescribes(basicSuiteName);
             }).toThrow();
         });
 
@@ -71,7 +71,7 @@ describe('dump_describes', () => {
             describe('good input', () => {
                 it('should succeed when given an existing file', done => {
                     setupMockSpy(done);
-                    dumpDescribes(basicSuite, generator).then(mock.f);
+                    dumpDescribes(basicSuiteName, generator).then(mock.f);
                 });
 
                 it('should succeed when given good input', done => {
@@ -107,17 +107,17 @@ describe('dump_describes', () => {
         describe('verbose', () => {
             it('should be off by default', done => {
                 setupVisitorSpy(false, done);
-                dumpDescribes(basicSuite, generator);
+                dumpDescribes(basicSuiteName, generator);
             });
 
             it('should be `false` when set', done => {
                 setupVisitorSpy(false, done);
-                dumpDescribes(basicSuite, generator, {verbose: false});
+                dumpDescribes(basicSuiteName, generator, {verbose: false});
             });
 
             it('should be `true` when set', done => {
                 setupVisitorSpy(true, done);
-                dumpDescribes(basicSuite, generator, {verbose: true});
+                dumpDescribes(basicSuiteName, generator, {verbose: true});
             });
         });
 
@@ -132,7 +132,7 @@ describe('dump_describes', () => {
                 };
 
                 it('should work when returned from a block (file)', done => {
-                    doHaystackTest(transpiledSuite, needle, options, false, done);
+                    doHaystackTest(transpiledSuiteName, needle, options, false, done);
                 });
 
                 it('should work when returned from a block (input)', done => {
@@ -147,7 +147,7 @@ describe('dump_describes', () => {
                 };
 
                 it('should work when returned from a block (file)', done => {
-                    doHaystackTest(transpiledSuite, needle, options, false, done);
+                    doHaystackTest(transpiledSuiteName, needle, options, false, done);
                 });
 
                 it('should work when returned from a block (input)', done => {
@@ -166,7 +166,7 @@ describe('dump_describes', () => {
                     const binaryExpressionString = testStrings.binaryExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, binaryExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, binaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -174,11 +174,11 @@ describe('dump_describes', () => {
                     });
                 });
 
-                xdescribe('CallExpression', () => {
+                describe('CallExpression', () => {
                     const callExpressionString = testStrings.callExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, callExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, callExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -190,7 +190,7 @@ describe('dump_describes', () => {
                     const conditionalExpressionString = testStrings.conditionalExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, conditionalExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, conditionalExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -202,7 +202,7 @@ describe('dump_describes', () => {
                     const memberExpressionString = testStrings.memberExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, memberExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, memberExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -214,7 +214,7 @@ describe('dump_describes', () => {
                     const templateLiteralString = testStrings.templateLiteral;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, templateLiteralString, options, false, done);
+                        doHaystackTest(basicSuiteName, templateLiteralString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -226,7 +226,7 @@ describe('dump_describes', () => {
                     const unaryExpressionString = testStrings.unaryExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, unaryExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, unaryExpressionString, options, false, done);
                     });
 
                     it('should have file support', done => {
@@ -244,7 +244,7 @@ describe('dump_describes', () => {
                     const binaryExpressionString = testStrings.binaryExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, binaryExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, binaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -252,11 +252,11 @@ describe('dump_describes', () => {
                     });
                 });
 
-                xdescribe('CallExpression', () => {
+                describe('CallExpression', () => {
                     const callExpressionString = testStrings.callExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, callExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, callExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -268,7 +268,7 @@ describe('dump_describes', () => {
                     const conditionalExpressionString = testStrings.conditionalExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, conditionalExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, conditionalExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -280,7 +280,7 @@ describe('dump_describes', () => {
                     const memberExpressionString = testStrings.memberExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, memberExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, memberExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -292,7 +292,7 @@ describe('dump_describes', () => {
                     const templateLiteralString = testStrings.templateLiteral;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, templateLiteralString, options, false, done);
+                        doHaystackTest(basicSuiteName, templateLiteralString, options, false, done);
                     });
 
                     it('should have input support', done => {
@@ -304,7 +304,7 @@ describe('dump_describes', () => {
                     const unaryExpressionString = testStrings.unaryExpression;
 
                     it('should have file support', done => {
-                        doHaystackTest(basicSuite, unaryExpressionString, options, false, done);
+                        doHaystackTest(basicSuiteName, unaryExpressionString, options, false, done);
                     });
 
                     it('should have input support', done => {

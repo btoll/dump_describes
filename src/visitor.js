@@ -53,8 +53,8 @@ module.exports = {
 
             case 'CallExpression':
                 // TODO
-                let args = node.arguments,
-                    name = node.callee.name;
+                const args = node.arguments;
+                const name = node.callee.name;
 
                 // Always capture the root node!
                 if (results.root && name === 'describe' || this.testDescribeBlock(name)) {
