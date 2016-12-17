@@ -2,15 +2,14 @@
 
 const transformer = require('../transformer');
 const rows = [];
-// TODO: Fix this funkiness!
 const getTabs = indent => {
-    const tabs = '';
-
-    while (indent) {
-        return `${getTabs(--indent)} \t`;
+    if (indent < 2) {
+        return '';
     }
 
-    return tabs;
+    const tabs = '\t';
+
+    return `${tabs}${getTabs(--indent)}`;
 };
 
 let indent = 0;
