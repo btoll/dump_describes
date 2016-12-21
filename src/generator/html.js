@@ -1,6 +1,6 @@
 'use strict';
 
-const transformer = require('../transformer');
+const transformer = require('s/src/transformer');
 let indent = 0;
 
 function makeTpl(header, suite) {

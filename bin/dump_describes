@@ -34,14 +34,18 @@ const argv = require('yargs')
     .alias('help', 'h')
     .argv;
 
-const makeTree = require('../src/index');
+const h = require('s');
+const visitor = require('../src/visitor');
+
 const target = argv.target;
-const info = logger.info;
-const error = logger.error;
+const logInfo = logger.info;
+const logError = logger.error;
 const options = {
     active: argv.active,
     destination: argv.destination || '.',
     inactive: argv.inactive,
+    // Use Map data structure rather than an Array.
+    useMap: true,
     verbose: argv.verbose
 };
 
@@ -53,6 +57,8 @@ if (argv.html) {
 } else {
     generator = require('../src/generator/log');
 }
+
+h.register(visitor);
 
 if (!target) {
     const stdin = process.stdin;
@@ -69,13 +75,13 @@ if (!target) {
     });
 
     stdin.on('end', () => {
+        // Last argument denotes this as data.
         makeTree(buf, generator, options, true)
-        .then(info)
-        .catch(error);
+        .then(logInfo)
+        .catch(logIrror);
     });
 } else {
-    makeTree(target, generator, options, false)
-    .then(info)
-    .catch(error);
+    h.makeTree(target, generator, options)
+    .then(logInfo);
 }
 

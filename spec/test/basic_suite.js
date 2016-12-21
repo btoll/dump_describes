@@ -20,6 +20,10 @@ describe('test', () => {
             it(function () {}, () => {})
         );
 
+        describe(() => {}, () =>
+            it(() => {}, () => {})
+        );
+
         describe(() => { const x = 5; }, () =>
             it(() => {}, () => {})
         );
