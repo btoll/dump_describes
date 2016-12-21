@@ -42,9 +42,6 @@ function makeTree(file, generator, options, isData) {
 }
 
 function visitTree(suite, options) {
-    const map = new Map();
-    map.root = true;
-
     // TODO: Make better?
     visitor.active = !!options.active;
     visitor.inactive = !!options.inactive;
@@ -52,7 +49,7 @@ function visitTree(suite, options) {
 
     return visitor.visit(esprima.parse(suite, {
         sourceType: 'module'
-    }), map);
+    }), new Map());
 }
 
 module.exports = makeTree;

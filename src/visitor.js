@@ -59,9 +59,6 @@ module.exports = {
                 const args = node.arguments;
                 const name = node.callee.name;
 
-                // Always capture the root node!
-//                 if (results.root && name === 'describe' || this.testDescribeBlock(name)) {
-                // Check to see if `results.root` is no longer needed!
                 if (this.testDescribeBlock(name)) {
                     let block = {
                         identifier: name,
@@ -69,7 +66,7 @@ module.exports = {
                     };
 
                     results.set(args.slice(0, -1), block);
-                    return this.visit(args.slice(-1)[0].body, block.map);
+                    this.visit(args.slice(-1)[0].body, block.map);
                 } else if (this.verbose && this.testItBlock(name)) {
                     results.set([args[0]], name);
                 } else {
