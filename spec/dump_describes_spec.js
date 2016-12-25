@@ -103,11 +103,11 @@ describe('dump_describes', () => {
                 doHaystackTest('spec/test/evil_suite.js', needle, false, done);
             });
 
-            xit('should not return any results when given invalid input', done => {
+            it('should not return any results when given invalid input', done => {
                 doHaystackTest('derp', needle, true, done);
             });
 
-            xit('should not return any results when given input with errors', done => {
+            it('should not return any results when given input with errors', done => {
                 doHaystackTest('null.x', needle, true, done);
             });
         });
@@ -145,7 +145,7 @@ describe('dump_describes', () => {
                     doHaystackTest(transpiledSuiteName, needle, false, done);
                 });
 
-                xit('should work when returned from a block (input)', done => {
+                it('should work when returned from a block (input)', done => {
                     doHaystackTest(suite, 'when foo', true, done);
                 });
             });
@@ -158,11 +158,11 @@ describe('dump_describes', () => {
                     verbose: true
                 }));
 
-                xit('should work when returned from a block (file)', done => {
+                it('should work when returned from a block (file)', done => {
                     doHaystackTest(transpiledSuiteName, needle, false, done);
                 });
 
-                xit('should work when returned from a block (input)', done => {
+                it('should work when returned from a block (input)', done => {
                     doHaystackTest(suite, needle, true, done);
                 });
             });
@@ -182,7 +182,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, arrowFunctionExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.arrowFunctionExpression, arrowFunctionExpressionString, true, done);
                     });
                 });
@@ -194,7 +194,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, assignmentExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.assignmentExpression, assignmentExpressionString, true, done);
                     });
                 });
@@ -206,7 +206,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, binaryExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.binaryExpression, binaryExpressionString, true, done);
                     });
                 });
@@ -218,7 +218,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, callExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.callExpression, callExpressionString, true, done);
                     });
                 });
@@ -230,7 +230,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, conditionalExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.conditionalExpression, conditionalExpressionString, true, done);
                     });
                 });
@@ -242,7 +242,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, functionExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.functionExpression, functionExpressionString, true, done);
                     });
                 });
@@ -254,7 +254,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, memberExpressionString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.memberExpression, memberExpressionString, true, done);
                     });
                 });
@@ -266,7 +266,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, templateLiteralString, false, done);
                     });
 
-                    xit('should have input support', done => {
+                    it('should have input support', done => {
                         doHaystackTest(testSuites.describe.templateLiteral, templateLiteralString, true, done);
                     });
                 });
@@ -278,7 +278,7 @@ describe('dump_describes', () => {
                         doHaystackTest(basicSuiteName, unaryExpressionString, false, done);
                     });
 
-                    xit('should have file support', done => {
+                    it('should have file support', done => {
                         doHaystackTest(testSuites.describe.unaryExpression, unaryExpressionString, true, done);
                     });
                 });

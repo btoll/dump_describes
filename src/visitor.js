@@ -53,6 +53,26 @@ module.exports = {
                 this.visit(callee, node, results);
             }
         }
+    },
+
+    ReturnStatement(node, parent, results) {
+        const nodeArgument = node.argument;
+
+        if (nodeArgument) {
+            const returnArgs = nodeArgument.arguments;
+
+            if (returnArgs) {
+                returnArgs.forEach(node => {
+                    // As long as of the type isn't (Arrow)?FunctionExpression, proceed.
+                    // (They will be captured in CallExpression above).
+                    if (!~node.type.indexOf('FunctionExpression')) {
+                        this.visit(node, parent, results);
+                    }
+                });
+            }
+
+            this.visit(nodeArgument, node, results);
+        }
     }
 };
 
