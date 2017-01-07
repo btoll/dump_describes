@@ -1,8 +1,8 @@
 'use strict';
 
 const generator = require('../src/generator/log');
-const s = require('s/src/index');
-const visitor = require('s/src/visitor');
+const s = require('onf-static/src/index');
+const visitor = require('onf-static/src/visitor');
 const dumpDescribesVisitor = require('../src/visitor');
 
 const testStrings = require('./test/strings');
