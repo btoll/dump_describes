@@ -1,6 +1,6 @@
 'use strict';
 
-const transformer = require('s/src/transformer');
+const transformer = require('onf-static/src/transformer');
 
 const getRow = (name, type) => {
     if (~type.indexOf('describe')) {

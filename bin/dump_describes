@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-const logger = require('logger');
+const logger = require('onf-logger');
 const argv = require('yargs')
     .usage('Usage: dump_describes [options]')
 
@@ -34,7 +34,7 @@ const argv = require('yargs')
     .alias('help', 'h')
     .argv;
 
-const h = require('s');
+const h = require('onf-static');
 const visitor = require('../src/visitor');
 
 const target = argv.target;
