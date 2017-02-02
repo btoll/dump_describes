@@ -29,7 +29,7 @@
     "suite"
   ],
   "author": "Benjamin Toll <benjam72@yahoo.com> (http://www.benjamintoll.com)",
-  "license": "MIT",
+  "license": "GPLv3",
   "dependencies": {
     "esprima": "^2.7.0",
     "onf-logger": "^0.1.0",

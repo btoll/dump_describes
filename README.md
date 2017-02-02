@@ -122,7 +122,7 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -t 
 
 ## License
 
-[MIT](LICENSE)
+[GPLv3](COPYING)
 
 ## Author
 
