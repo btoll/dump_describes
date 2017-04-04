@@ -42,10 +42,24 @@ The following identifiers are supported:
     --html | Creates an html document of the tree
     --markdown, --md | Creates a markdown document of the tree
     --target, -t | The target suite to parse
+    --debug | Turns on debug mode
     --verbose, -v | Also dumps `it` blocks
     --help, -h | Show help
 
 ## Examples
+
+Test on the CLI by piping into `stdin`:
+
+    cat | dump_describes -v
+
+At which point enter the following snippet, followed by Ctrl-D:
+
+    describe('test', () => {
+        describe('foo', () => {
+            it('should derp', () => {
+            });
+        });
+    });
 
 The following will dump the result of processing the `Filters.js` suite to `stdout`:
 
@@ -119,6 +133,16 @@ Typing `:ddv` followed by a [[space]] will become `:!clear && dump_describes -t 
 ![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/log_verbose.png)
 ![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html.png)
 ![ScreenShot](https://raw.github.com/btoll/i/master/dump_describes/html_verbose.png)
+
+## Known Issues
+
+The following nodes are not yet supported and parsing them will produce surprising and unexpected results (even errors):
+
+- ForStatement
+- ForInStatement
+- ForOfStatement
+- DoWhileStatement
+- WhileStatement
 
 ## License
 
