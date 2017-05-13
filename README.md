@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/btoll/dump_describes.svg?branch=master)](https://travis-ci.org/btoll/dump_describes)
 [![Coverage Status](https://coveralls.io/repos/github/btoll/dump_describes/badge.svg?branch=master)](https://coveralls.io/github/btoll/dump_describes?branch=master)
+[![npm](https://img.shields.io/npm/v/dump_describes.svg)](https://www.npmjs.com/package/dump_describes)
 
 **dump_describes** is a tool that provides a high-level view of all of the `describe` and `it` blocks in a test suite.  This is useful to quickly gain familiarity with a particular suite and to easily determine where to insert new tests.
 
