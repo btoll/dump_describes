@@ -37,35 +37,44 @@ const argv = require('yargs')
     .alias('help', 'h')
     .argv;
 
-const h = require('onf-static');
+const onfStatic = require('onf-static');
 const visitor = require('../src/visitor');
 
 const target = argv.target;
 const logInfo = logger.info;
 const logError = logger.error;
-const options = {
-    active: argv.active,
-    destination: argv.destination || '.',
-    inactive: argv.inactive,
-    // Use Map data structure rather than an Array.
-    useMap: true,
-    verbose: argv.verbose
-};
 
-let generator = null;
+let type;
+
 if (argv.html) {
-    generator = require('../src/generator/html');
+    type = 'html';
 } else if (argv.markdown) {
-    generator = require('../src/generator/markdown');
+    type = 'markdown';
 } else {
-    generator = require('../src/generator/log');
+    type = 'log';
 }
 
-// TODO: This is just a temporary solution.
-h.setDebugLevel(!argv.debug ? 'NONE' : 'DEBUG');
+onfStatic.setOptions({
+    destination: argv.destination || '.',
+    generator: {
+        html: require('../src/generator/html'),
+        log: require('../src/generator/log'),
+        markdown: require('../src/generator/markdown')
+    },
+    type,
+    useMap: true, // Use Map data structure rather than an Array.
+    verbose: argv.verbose,
+    visitor: visitor.refs
+});
 
-// Mixin our node type functions.
-h.register(visitor);
+visitor.setOptions({
+    active: argv.active,
+    inactive: argv.inactive,
+    verbose: argv.verbose,
+});
+
+// TODO: This is just a temporary solution.
+//onfStatic.setDebugLevel(!argv.debug ? 'NONE' : 'DEBUG');
 
 if (!target) {
     const stdin = process.stdin;
@@ -83,12 +92,12 @@ if (!target) {
 
     stdin.on('end', () => {
         // Last argument denotes this as data.
-        h.makeTree(buf, generator, options, true)
+        onfStatic.makeTree(buf, true)
         .then(logInfo)
         .catch(logError);
     });
 } else {
-    h.makeTree(target, generator, options)
+    onfStatic.makeTree(target)
     .then(logInfo);
 }
 
