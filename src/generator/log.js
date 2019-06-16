@@ -27,10 +27,9 @@ const makeNode = (map, verbose) => {
         const entry1 = entry[1],
             map = entry1.map;
 
-        let expectation = entry[0].reduce((acc, curr) => {
-            acc += transformer.getNodeValue(curr);
-            return acc;
-        }, '');
+        let expectation = entry[0].reduce((acc, curr) => (
+            acc += transformer.getNodeValue(curr)
+        ), '');
 
         getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
 
@@ -56,6 +55,8 @@ const print = (results, options) => {
 //                 }, '');
 
             rows.push(`Test suite ${suiteName}`);
+            rows.push(`(describe) ${suiteName}`);
+
             makeNode(entry[1].map, options.verbose);
         }
 
@@ -64,7 +65,7 @@ const print = (results, options) => {
 };
 
 const rows = [];
-let indent = 0;
+let indent = 1;
 
 module.exports = {
     print

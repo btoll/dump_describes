@@ -1,7 +1,7 @@
 'use strict';
 
 const transformer = require('onf-static/src/transformer');
-let indent = 0;
+let indent = 1;
 
 function makeTpl(header, suite) {
     return `
@@ -109,6 +109,19 @@ document.body.addEventListener('click', event => {
     `;
 }
 
+function getRow(name, type) {
+    return `<p class="${indent < 2 ? 'stripe' : ''}">
+        <span class="${type}">
+            ${
+                type.indexOf('describe') > -1 ?
+                `(<a href="#">${type}</a>)` :
+                `${type} -> `
+            }
+        </span>
+        <span>${name}</span>
+    </p>`;
+}
+
 module.exports = {
     print: function (results, options) {
         return new Promise((resolve, reject) => {
@@ -120,10 +133,16 @@ module.exports = {
 
                 // Trim quotes from the begin and end of the suiteName.
                 const newFile = `${options.destination}/${suiteName.replace(/^['"]|['"]$/g, '')}_suite.html`;
+                let buf = [];
 
-                let tpl;
+                buf.push(
+                    '<div>',
+                    getRow(suiteName, 'describe'),
+                    this.makeNode(entry[1].map, options.verbose),
+                    '</div>'
+                );
 
-                tpl = makeTpl(suiteName, this.makeNode(entry[1].map, [], options.verbose));
+                let tpl = makeTpl(suiteName, buf.join(''));
 
                 require('fs').writeFile(newFile, tpl, 'utf8', err => {
                     if (err) {
@@ -136,62 +155,48 @@ module.exports = {
         });
     },
 
-    makeNode: (() => {
-        function getRow(name, type) {
-            return `<p class="${indent < 2 ? 'stripe' : ''}">
-                <span class="${type}">
-                    ${
-                        type.indexOf('describe') > -1 ?
-                        `(<a href="#">${type}</a>)` :
-                        `${type} -> `
-                    }
-                </span>
-                <span>${name}</span>
-            </p>`;
+    makeNode: function (map, verbose) {
+        const buf = []
+        indent++;
+
+        for (const entry of map.entries()) {
+            const entry1 = entry[1],
+                map = entry1.map,
+                leftPadding = !(indent < 2) ? 'padding-left: 50px;' : '';
+
+            let expectation = entry[0].reduce((acc, curr) => {
+                acc += transformer.getNodeValue(curr);
+                return acc;
+            }, '');
+
+            getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
+
+            if (map || !verbose) {
+                const child = [];
+
+                buf.push(`<div style="${leftPadding}">`);
+                child.push(getRow(expectation, entry1.identifier));
+
+                // Note that will send an enclosing DIV to wrap all the children for
+                // the collapse/expand behavior.
+                child.push(
+                    this.makeNode(map, ['<div>'], verbose),
+                    '</div>'
+                );
+
+                buf.push(child.join(''), '</div>');
+            } else {
+                buf.push(
+                    `<div style="${leftPadding}">`,
+                    getRow.call(this, expectation, entry1),
+                    '</div>'
+                );
+            }
         }
 
-        return function (map, buf, verbose) {
-            indent++;
+        indent--;
 
-            for (const entry of map.entries()) {
-                const entry1 = entry[1],
-                    map = entry1.map,
-                    leftPadding = !(indent < 2) ? 'padding-left: 50px;' : '';
-
-                let expectation = entry[0].reduce((acc, curr) => {
-                    acc += transformer.getNodeValue(curr);
-                    return acc;
-                }, '');
-
-                getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
-
-                if (map || !verbose) {
-                    const child = [];
-
-                    buf.push(`<div style="${leftPadding}">`);
-                    child.push(getRow(expectation, entry1.identifier));
-
-                    // Note that will send an enclosing DIV to wrap all the children for
-                    // the collapse/expand behavior.
-                    child.push(
-                        this.makeNode(map, ['<div>'], verbose),
-                        '</div>'
-                    );
-
-                    buf.push(child.join(''), '</div>');
-                } else {
-                    buf.push(
-                        `<div style="${leftPadding}">`,
-                        getRow.call(this, expectation, entry1),
-                        '</div>'
-                    );
-                }
-            }
-
-            indent--;
-
-            return buf.join('');
-        };
-    })()
+        return buf.join('');
+    }
 };
 

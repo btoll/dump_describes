@@ -6,7 +6,7 @@
 
 **dump_describes** is a tool that provides a high-level view of all of the `describe` and `it` blocks in a test suite.  This is useful to quickly gain familiarity with a particular suite and to easily determine where to insert new tests.
 
-Any testing framework that uses `describe` and `it` blocks to define a suite is supported, such as [Jasmine] and [Mocha].
+Any testing framework that uses `describe` and `it` blocks to define a suite is supported, such as [Jasmine], [Mocha] and [Jest].
 
 ## How It Works
 
@@ -159,6 +159,7 @@ Benjamin Toll
 [Esprima]: http://esprima.org/
 [Jasmine]: http://jasmine.github.io/
 [Mocha]: http://mochajs.org/
+[Jest]: https://jestjs.io/
 [HTML]: /src/generator/html.js
 [LOG]: /src/generator/log.js
 [MARKDOWN]: /src/generator/markdown.js
