@@ -154,12 +154,11 @@ module.exports = {
     },
 
     makeNode: function (map, buf, verbose) {
-        const its = [];
         indent++;
 
         // Enclose everything with a `div`.  This will ensure that suites that
         // don't have any child `describe` blocks will still collapse correctly.
-        buf.push(`<div>`);
+        buf.push('<div>');
 
         for (const entry of map.entries()) {
             const entry1 = entry[1],
