@@ -33,6 +33,7 @@
   "license": "GPLv3",
   "dependencies": {
     "esprima": "^2.7.0",
+    "jasmine": "^3.4.0",
     "onf-logger": "^0.1.0",
     "onf-static": "git+https://github.com/btoll/onf-static.git",
     "yargs": "^3.29.0"

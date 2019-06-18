@@ -3,7 +3,21 @@
 ###(describe) 'making a suite'
 	 it -> 'should return a promise'
 	 it -> 'should throw if not given a file'
-	 it -> 'should throw if not given a generator'
+
+	(describe) 'configuration'
+
+		(describe) 'onf-static options'
+			 it -> 'should use the specified generator'
+			 it -> 'should use the specified visitor'
+			 it -> 'should not throw if not given a generator or visitor (will use the defaults)'
+
+		(describe) 'visitor options'
+
+			(describe) 'active'
+
+			(describe) 'inactive'
+
+			(describe) 'verbose'
 
 	(describe) 'when given input'
 
@@ -20,11 +34,6 @@
 		 it -> 'should not return any results when given code with errors'
 		 it -> 'should not return any results when given invalid input'
 		 it -> 'should not return any results when given input with errors'
-
-	(describe) 'verbose'
-		 it -> 'should be off by default'
-		 it -> 'should be `false` when set'
-		 it -> 'should be `true` when set'
 
 	(describe) 'when part of return statements'
 
