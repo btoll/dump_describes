@@ -1,6 +1,6 @@
 {
   "name": "dump_describes",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "View all `describe` and `it` blocks in a test suite",
   "bin": {
     "dump_describes": "./bin/dump_describes"

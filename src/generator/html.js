@@ -135,12 +135,10 @@ module.exports = {
                 const newFile = `${options.destination}/${suiteName.replace(/^['"]|['"]$/g, '')}_suite.html`;
                 let buf = [];
 
-                buf.push(
-                    '<div>',
-                    getRow(suiteName, 'describe'),
-                    this.makeNode(entry[1].map, options.verbose),
-                    '</div>'
-                );
+                buf.push('<div>');
+                buf.push(getRow(suiteName, 'describe'));
+                this.makeNode(entry[1].map, buf, options.verbose),
+                buf.push('</div>');
 
                 let tpl = makeTpl(suiteName, buf.join(''));
 
@@ -155,8 +153,7 @@ module.exports = {
         });
     },
 
-    makeNode: function (map, verbose) {
-        const buf = []
+    makeNode: function (map, buf, verbose) {
         indent++;
 
         for (const entry of map.entries()) {
