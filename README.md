@@ -66,6 +66,10 @@ The following will dump the result of processing the `Filters.js` suite to `stdo
 
     dump_describes -t Filters.js
 
+Also, print debugging information:
+
+    dump_describes --debug -t Filters.js
+
 Also, dump `it` blocks:
 
     dump_describes -t Filters.js -v

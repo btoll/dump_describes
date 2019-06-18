@@ -73,8 +73,7 @@ visitor.setOptions({
     verbose: argv.verbose,
 });
 
-// TODO: This is just a temporary solution.
-//onfStatic.setDebugLevel(!argv.debug ? 'NONE' : 'DEBUG');
+onfStatic.setDebugLevel(!argv.debug ? 'NONE' : 'DEBUG');
 
 if (!target) {
     const stdin = process.stdin;

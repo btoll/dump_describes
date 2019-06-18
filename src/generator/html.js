@@ -154,7 +154,12 @@ module.exports = {
     },
 
     makeNode: function (map, buf, verbose) {
+        const its = [];
         indent++;
+
+        // Enclose everything with a `div`.  This will ensure that suites that
+        // don't have any child `describe` blocks will still collapse correctly.
+        buf.push(`<div>`);
 
         for (const entry of map.entries()) {
             const entry1 = entry[1],
@@ -166,17 +171,13 @@ module.exports = {
                 return acc;
             }, '');
 
-            getRow(expectation, (verbose && !map ? entry1 : entry1.identifier));
-
             if (map || !verbose) {
                 const child = [];
 
                 buf.push(`<div style="${leftPadding}">`);
-                child.push(getRow(expectation, entry1.identifier));
 
-                // Note that will send an enclosing DIV to wrap all the children for
-                // the collapse/expand behavior.
                 child.push(
+                    getRow(expectation, entry1.identifier),
                     this.makeNode(map, ['<div>'], verbose),
                     '</div>'
                 );
@@ -191,6 +192,7 @@ module.exports = {
             }
         }
 
+        buf.push('</div>');
         indent--;
 
         return buf.join('');
