@@ -82,7 +82,7 @@ module.exports = {
 
                 this.visit(nodeArgument, node, results);
             }
-        },
+        }
     },
 
     getOptions() {
@@ -90,7 +90,7 @@ module.exports = {
     },
 
     setOptions(opts) {
-        defaultOptions = {...defaultOptions, ...opts};
+        defaultOptions = Object.assign({}, defaultOptions, opts);
     }
 };
 
