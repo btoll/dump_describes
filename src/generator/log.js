@@ -55,8 +55,7 @@ const print = (results, options) => {
 //                 }, '');
 
             rows.push(`Test suite ${suiteName}`);
-            rows.push(`(describe) ${suiteName}`);
-
+            rows.push(`(${entry[1].identifier}) ${suiteName}`);
             makeNode(entry[1].map, options.verbose);
         }
 

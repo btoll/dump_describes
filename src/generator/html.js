@@ -136,7 +136,7 @@ module.exports = {
                 let buf = [];
 
                 buf.push('<div>');
-                buf.push(getRow(suiteName, 'describe'));
+                buf.push(getRow(suiteName, entry[1].identifier));
                 this.makeNode(entry[1].map, buf, options.verbose),
                 buf.push('</div>');
 

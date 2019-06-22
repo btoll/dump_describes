@@ -7,7 +7,8 @@ const reIt = /^[f|x]?it/;
 const reFIt = /^fit/;
 const reXIt = /^xit/;
 
-let testDescribeBlock = (name, options) => {
+let testDescribeBlock = name => {
+    const options = defaultOptions;
     const re = options.active ? reFDescribe :
         options.inactive ? reXDescribe :
         reDescribe;
@@ -18,7 +19,8 @@ let testDescribeBlock = (name, options) => {
     return testDescribeBlock(name);
 };
 
-let testItBlock = (name, options) => {
+let testItBlock = name => {
+    const options = defaultOptions;
     const re = options.active ? reFIt :
         options.inactive ? reXIt :
         reIt;
@@ -42,7 +44,7 @@ module.exports = {
             const callee = node.callee;
             const name = callee.name;
 
-            if (testDescribeBlock(name, defaultOptions)) {
+            if (testDescribeBlock(name)) {
                 const block = {
                     identifier: name,
                     map: new Map()
@@ -50,7 +52,7 @@ module.exports = {
 
                 results.set(callArgs.slice(0, -1), block);
                 this.visit(callArgs.slice(-1)[0].body, node, block.map);
-            } else if (defaultOptions.verbose && testItBlock(name, defaultOptions)) {
+            } else if (defaultOptions.verbose && testItBlock(name)) {
                 results.set([callArgs[0]], name);
             // TODO: Is this last block necessary?
             } else {
