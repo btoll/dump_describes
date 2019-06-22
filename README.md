@@ -37,8 +37,6 @@ The following identifiers are supported:
 
     Property | Description
     ------------ | -------------
-    --active | List only active blocks (i.e., `fdescribe`, `fit`)
-    --inactive | List only inactive blocks (i.e., `xdescribe`, `xit`)
     --destination, -d | [Optional] The location to save the output (defaults to $PWD)
     --html | Creates an html document of the tree
     --markdown, --md | Creates a markdown document of the tree
@@ -74,22 +72,6 @@ Also, dump `it` blocks:
 
     dump_describes -t Filters.js -v
 
-Only dump the 'active' `fdescribe` blocks to `stdout`:
-
-    dump_describes -t Filters.js --active
-
-Same as the previous, but in addition dump 'active' `fit` blocks to `stdout`:
-
-    dump_describes -t Filters.js --active
-
-Only dump the 'inactive' `xdescribe` blocks to `stdout`:
-
-    dump_describes -t Filters.js --inactive
-
-Same as the previous, but in addition dump 'inactive' `xit` blocks to `stdout`:
-
-    dump_describes -t Filters.js --inactive -v
-
 Create an `html` document of the same tree produced by the previous command (`describe` nodes can be expanded/collapsed):
 
     dump_describes -t Filters.js -v --html
@@ -110,10 +92,8 @@ Let's get fancy and open a file from the internet in the default browser:
 
     curl https://raw.githubusercontent.com/btoll/dump_describes/master/spec/dump_describes_spec.js |
         dump_describes -v --html |
-        cut -d' ' -f2 |
-        xargs open
-
-* Note that the above pipeline is using `open` which is an OS X tool.
+        cut -d' ' -f3 |
+        xargs xdg-open
 
 ## Creating a Custom Code Generator
 
