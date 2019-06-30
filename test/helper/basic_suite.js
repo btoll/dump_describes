@@ -4,6 +4,7 @@
 describe('test', () => {
     const foo = {};
     const quux = () => {};
+    const zap = () => ({ bar: () => {} });
     let bar;
     let baz;
 
@@ -48,8 +49,8 @@ describe('test', () => {
             it(`baz ${foo.bar}`, () => {})
         );
 
-        describe(quux() + 'baz ' + foo('derp').bar(), () =>
-            it(quux() + 'baz ' + foo('derp').bar(), () => {})
+        describe(quux() + 'baz ' + zap('derp').bar(), () =>
+            it(quux() + 'baz ' + zap('derp').bar(), () => {})
         );
     });
 });

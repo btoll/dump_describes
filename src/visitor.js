@@ -56,9 +56,10 @@ module.exports = {
                 results.set([callArgs[0]], name);
             // TODO: Is this last block necessary?
             } else {
+                // TODO: Is this necessary?
                 callArgs.forEach(arg => this.visit(arg, node, results));
 
-                if (callee) {
+                if (callee && node.type === 'CallExpression') {
                     this.visit(callee, node, results);
                 }
             }

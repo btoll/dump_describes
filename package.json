@@ -1,6 +1,6 @@
 {
   "name": "dump_describes",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "View all `describe` and `it` blocks in a test suite",
   "bin": {
     "dump_describes": "./bin/dump_describes"
@@ -8,13 +8,11 @@
   "main": "./src/index.js",
   "scripts": {
     "clean": "rm -rf build coverage",
-    "compile": "babel -d build src",
     "coverage": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine --captureExceptions",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "lint": "eslint bin spec src",
-    "specs": "JASMINE_CONFIG_PATH=jasmine.json jasmine && npm run suites",
-    "suites": "bin/dump_describes -t spec/dump_describes_spec.js -d spec -v --html && bin/dump_describes -t spec/dump_describes_spec.js -d spec -v --md",
-    "test": "npm run clean && npm run lint && npm run compile && npm run specs",
+    "lint": "eslint bin test src",
+    "specs": "JASMINE_CONFIG_PATH=jasmine.json jasmine",
+    "test": "npm run clean && npm run lint && npm run specs",
     "watch": "bash ./scripts/watch.bash"
   },
   "keywords": [
@@ -50,11 +48,10 @@
   },
   "homepage": "https://github.com/btoll/dump_describes#readme",
   "devDependencies": {
-    "babel-core": "^6.6.4",
-    "babel-preset-es2015": "^6.6.0",
     "coveralls": "^2.11.8",
     "eslint": "^2.2.0",
     "istanbul": "^0.4.2",
     "jasmine-core": "^2.4.1"
   }
 }
+
